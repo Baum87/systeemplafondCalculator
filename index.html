@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Systeemplafond Rekenmachine</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Systeemplafond Rekenmachine</h1>
+            <p class="subtitle">Materiaalberekening</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            
+            <!-- Systeem Keuze -->
+            <section class="section">
+                <h2 class="section-title">Selecteer Systeemtype</h2>
+                <div class="button-group">
+                    <button class="btn btn-system" data-system="600x600">
+                        <span class="btn-label">600x600 systeem</span>
+                    </button>
+                    <button class="btn btn-system" data-system="600x1200">
+                        <span class="btn-label">600x1200 systeem</span>
+                    </button>
+                </div>
+                <div id="selected-system" class="selected-system" style="display: none;">
+                    ✓ <strong id="system-name"></strong> geselecteerd
+                </div>
+            </section>
+
+            <!-- Invoer Sectie -->
+            <section class="section" id="input-section" style="display: none;">
+                <h2 class="section-title">Voer Afmetingen in</h2>
+                
+                <!-- Input Mode Toggle -->
+                <div class="input-mode-toggle">
+                    <label class="radio-label">
+                        <input type="radio" name="input-mode" value="sqm" checked>
+                        Voer vierkante meters rechtstreeks in
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="input-mode" value="dimensions">
+                        Voer lengte en breedte in
+                    </label>
+                </div>
+
+                <!-- Vierkante Meters Input -->
+                <div id="sqm-input-group" class="input-group">
+                    <label for="vierkante-meters">Vierkante Meters (m²)</label>
+                    <input 
+                        type="number" 
+                        id="vierkante-meters" 
+                        min="0.1" 
+                        step="0.5" 
+                        value="10"
+                        class="input-field"
+                    >
+                </div>
+
+                <!-- Dimensions Input -->
+                <div id="dimensions-input-group" class="input-group" style="display: none;">
+                    <div class="two-column">
+                        <div>
+                            <label for="lengte">Lengte (m)</label>
+                            <input 
+                                type="number" 
+                                id="lengte" 
+                                min="0.1" 
+                                step="0.5" 
+                                value="5"
+                                class="input-field"
+                            >
+                        </div>
+                        <div>
+                            <label for="breedte">Breedte (m)</label>
+                            <input 
+                                type="number" 
+                                id="breedte" 
+                                min="0.1" 
+                                step="0.5" 
+                                value="4"
+                                class="input-field"
+                            >
+                        </div>
+                    </div>
+                    <div id="calculated-sqm" class="info-text"></div>
+                </div>
+
+                <!-- Divider -->
+                <div class="divider"></div>
+
+                <!-- Strekkende Meters -->
+                <div class="input-group">
+                    <label for="strekkende-meters">Strekkende Meters (m)</label>
+                    <input 
+                        type="number" 
+                        id="strekkende-meters" 
+                        min="0.1" 
+                        step="0.5" 
+                        value="10"
+                        class="input-field"
+                    >
+                </div>
+            </section>
+
+            <!-- Resultaten Sectie -->
+            <section class="section" id="results-section" style="display: none;">
+                <h2 class="section-title">Materiaalvereisten</h2>
+                
+                <div class="results-container">
+                    <!-- Profielen -->
+                    <div class="results-group">
+                        <h3 class="results-group-title">Profielen</h3>
+                        
+                        <div class="result-item">
+                            <span class="result-label">Aantal Hoofdprofielen 3600 mm</span>
+                            <span class="result-value" id="result-hoofdprofielen">-</span>
+                        </div>
+
+                        <div class="result-item">
+                            <span class="result-label">Aantal Tussenprofielen 1200 mm</span>
+                            <span class="result-value" id="result-tussenprofiel-1200">-</span>
+                        </div>
+
+                        <div class="result-item" id="result-tussenprofiel-600-item" style="display: none;">
+                            <span class="result-label">Aantal Tussenprofielen 600 mm</span>
+                            <span class="result-value" id="result-tussenprofiel-600">-</span>
+                        </div>
+
+                        <div class="result-item">
+                            <span class="result-label">Aantal Plafondplaten</span>
+                            <span class="result-value" id="result-plafondplaten">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="results-divider"></div>
+
+                    <!-- Randmaterialen -->
+                    <div class="results-group">
+                        <h3 class="results-group-title">Randmaterialen</h3>
+
+                        <div class="result-item">
+                            <span class="result-label">Aantal Hoeklijnen 3000 mm</span>
+                            <span class="result-value" id="result-hoeklijn">-</span>
+                        </div>
+
+                        <div class="result-item">
+                            <span class="result-label">Aantal Kantlaten 3000 mm</span>
+                            <span class="result-value" id="result-kantlat">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary -->
+                <div class="summary-info">
+                    Berekend op: <strong id="summary-sqm">-</strong> m² oppervlak | <strong id="summary-meters">-</strong> m strekkende meters
+                </div>
+            </section>
+
+            <!-- Empty State -->
+            <section class="section empty-state" id="empty-state">
+                <div class="empty-state-content">
+                    <p class="empty-state-text">Selecteer een systeemtype om te beginnen met berekenen</p>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Systeemplafond Rekenmachine v1.0 | Ontwikkeld door RB | 2026</p>
+        </footer>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
