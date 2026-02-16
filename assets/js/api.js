@@ -3,7 +3,7 @@
  * Communicatie met Python Flask backend
  */
 
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = 'https://systeemplafondcalculator.onrender.com/api';
 
 console.log('API initialized with base URL:', API_BASE_URL);
 
