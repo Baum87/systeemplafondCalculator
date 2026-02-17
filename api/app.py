@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from datetime import datetime 
 import math
 
 app = Flask(__name__)
@@ -149,6 +150,19 @@ def not_found(e):
 @app.errorhandler(500)
 def server_error(e):
     return jsonify({"error": "Server error"}), 500
+
+
+@app.route('/api/keepalive', methods=['GET', 'POST', 'HEAD'])
+def keepalive():
+    """
+    Keepalive endpoint voor cron-job.org
+    Voorkomt dat Render app slaapt na 15 min inactiviteit.
+    """
+    return jsonify({
+        "status": "OK",
+        "message": "App is alive!",
+        "timestamp": datetime.now().isoformat()
+    }), 200
 
 
 # ============================================================================
