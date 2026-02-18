@@ -28,6 +28,8 @@ systeemplafond-rekenmachine/
 
 ## 🛠️ Technologie Stack
 
+### - Frontend: Github, Backend: Render.com, Ping om server van Render actief te houden: Cron-jobs.org
+
 ### Frontend
 - **HTML5** - Semantische markup
 - **CSS3** - Modern styling, responsive design
