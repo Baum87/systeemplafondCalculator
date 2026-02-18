@@ -47,6 +47,18 @@
             <!-- Invoer Sectie -->
             <section class="section" id="input-section" style="display: none;">
                 <h2 class="section-title">Voer Afmetingen in</h2>
+
+                <!-- FASE 2: Room Name Input -->
+                <div class="input-group">
+                    <label for="ruimte-naam">Ruimte/Verdieping (bijv. Kantoor, Gang)</label>
+                    <input 
+                        type="text" 
+                        id="ruimte-naam" 
+                        placeholder="Bijv. Kantoor, Gang, Toilet..."
+                        class="input-field"
+                        value="Ruimte 1"
+                    >
+                </div>
                 
                 <!-- Input Mode Toggle -->
                 <div class="input-mode-toggle">
@@ -168,10 +180,16 @@
                     </div>
                 </div>
 
+                <!-- FASE 2: Add to Table Button -->
+                <button id="btn-add-to-table" class="btn btn-add-room" style="display: none;">
+                    ➕ Toevoegen aan Tabel
+                </button>
+
                 <!-- Summary -->
                 <div class="summary-info">
                     Berekend op: <strong id="summary-sqm">-</strong> m² oppervlak | <strong id="summary-meters">-</strong> m strekkende meters | <strong id="summary-system">-</strong>
                 </div>
+
             </section>
 
             <!-- Empty State -->
@@ -180,6 +198,57 @@
                     <p class="empty-state-text">Selecteer een systeemtype om te beginnen met berekenen</p>
                 </div>
             </section>
+            
+            <!-- FASE 2: Ruimtes Tabel Section -->
+            <section class="section" id="ruimtes-section" style="display: none;">
+                <h2 class="section-title">Ruimtes Overzicht</h2>
+                
+                <div class="table-wrapper">
+                    <table id="ruimtes-table" class="ruimtes-table">
+                        <thead>
+                            <tr>
+                                <th>Omschrijving</th>
+                                <th>m²</th>
+                                <th>m</th>
+                                <th>Platen Type</th>
+                                <th>H-prof</th>
+                                <th>T1200</th>
+                                <th>T600</th>
+                                <th>Hoeklijn</th>
+                                <th>Kantlat</th>
+                                <th>Acties</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ruimtes-tbody">
+                            <!-- Gevuld via JavaScript -->
+                        </tbody>
+                        <tfoot>
+                            <tr class="totalen-row">
+                                <td><strong>TOTAAL</strong></td>
+                                <td id="total-sqm">0</td>
+                                <td id="total-meters">0</td>
+                                <td>-</td>
+                                <td id="total-hoofdprofiel">0</td>
+                                <td id="total-tussenprofiel1200">0</td>
+                                <td id="total-tussenprofiel600">0</td>
+                                <td id="total-hoeklijn">0</td>
+                                <td id="total-kantlat">0</td>
+                                <td>-</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                
+                <div class="table-actions">
+                    <button id="btn-add-new-room" class="btn btn-primary">
+                        + Voeg Ruimte Toe
+                    </button>
+                    <button id="btn-download-pdf" class="btn btn-secondary" style="display: none;">
+                        📥 Download PDF (Fase 3)
+                    </button>
+                </div>
+            </section>
+
 
         </main>
 
