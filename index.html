@@ -47,18 +47,6 @@
             <!-- Invoer Sectie -->
             <section class="section" id="input-section" style="display: none;">
                 <h2 class="section-title">Voer Afmetingen in</h2>
-
-                <!-- FASE 2: Room Name Input -->
-                <div class="input-group">
-                    <label for="ruimte-naam">Ruimte/Verdieping (bijv. Kantoor, Gang)</label>
-                    <input 
-                        type="text" 
-                        id="ruimte-naam" 
-                        placeholder="Bijv. Kantoor, Gang, Toilet..."
-                        class="input-field"
-                        value="Ruimte 1"
-                    >
-                </div>
                 
                 <!-- Input Mode Toggle -->
                 <div class="input-mode-toggle">
@@ -180,15 +168,31 @@
                     </div>
                 </div>
 
-                <!-- FASE 2: Add to Table Button -->
-                <button id="btn-add-to-table" class="btn btn-add-room" style="display: none;">
-                    ➕ Toevoegen aan Tabel
-                </button>
 
                 <!-- Summary -->
                 <div class="summary-info">
                     Berekend op: <strong id="summary-sqm">-</strong> m² oppervlak | <strong id="summary-meters">-</strong> m strekkende meters | <strong id="summary-system">-</strong>
                 </div>
+
+                <!-- FASE 2: Room Name Input -->
+                <br>
+                <div class="input-group">
+                    <label for="ruimte-naam">Ruimte/Verdieping (bijv. Kantoor, Gang)</label>
+                    <input 
+                        type="text" 
+                        id="ruimte-naam" 
+                        placeholder="Bijv. Kantoor, Gang, Toilet..."
+                        class="input-field"
+                        value="Ruimte 1"
+                    >
+                </div>
+                
+                <!-- FASE 2: Add to Table Button -->
+                <br>
+                <button id="btn-add-to-table" class="btn btn-add-room" style="display: none;">
+                    ➕ Toevoegen aan Tabel
+                </button>
+              
 
             </section>
 
