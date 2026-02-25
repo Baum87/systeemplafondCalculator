@@ -18,18 +18,18 @@ print("="*60)
 MATERIALS = {
     "600x600": {
         "naam": "600x600 systeem",
-        "hoofdprofiel": 0.28,
-        "tussenprofiel_1200": 1.39,
-        "tussenprofiel_600": 1.39,
+        "hoofdprofiel": 0.2333,
+        "tussenprofiel_1200": 1.392,
+        "tussenprofiel_600": 1.392,
         "plafondplaat": 2.78,
         "hoeklijn": 1/3,
         "kantlat": 1/3,
     },
     "600x1200": {
         "naam": "600x1200 systeem",
-        "hoofdprofiel": 0.28,
-        "tussenprofiel_1200": 1.39,
-        "plafondplaat": 1.39,
+        "hoofdprofiel": 0.2333,
+        "tussenprofiel_1200": 1.392,
+        "plafondplaat": 1.392,
         "hoeklijn": 1/3,
         "kantlat": 1/3,
     }
