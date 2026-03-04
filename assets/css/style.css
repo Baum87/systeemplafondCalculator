@@ -1,48 +1,238 @@
-/* ========================================================================== */
-/* SYSTEEMPLAFOND REKENMACHINE - MINIMAL APPLE DESIGN */
-/* ========================================================================== */
+/* ==========================================================================
+   AFBOUWR — Gedeelde stijl v1.0
+   Geldig voor: hub (index.html) + alle calculatoren
+   
+   Gebruik in elke repo:
+   Fase 1 (nu):    <link rel="stylesheet" href="style.css">
+                   → kopieer dit bestand naar elke repo
+   
+   Fase 2 (groei): <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afbouwr/shared@main/style.css">
+                   → één centrale bron, alle repos updaten automatisch
+   ========================================================================== */
 
-* {
+/* ── RESET ── */
+*, *::before, *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* ========================================================================== */
-/* GLOBAL */
-/* ========================================================================== */
+/* ── DESIGN TOKENS ── */
+:root {
+  /* Kleuren — hub én calculator */
+  --bg:              #F8F7F4;
+  --surface:         #FFFFFF;
+  --surface-2:       #F2F1ED;
+  --ink:             #1C2B3A;    /* iets warmer dan puur zwart, beter leesbaar */
+  --ink-2:           #57564F;
+  --ink-3:           #9B9A93;
+  --accent:          #1F6B45;    /* groen — vakmanschap, betrouwbaar */
+  --accent-light:    #EDF4EF;
+  --accent-dark:     #174D32;
+  --warn:            #C8571B;    /* terracotta — actie */
+  --warn-light:      #FEF2EE;
+  --border:          #E5E3DC;
+  --border-2:        #CECCBF;
+  --error:           #D94F4F;
+  --error-light:     #FEF2F2;
 
+  /* Bestaande calculator kleuren (behouden voor backward compat) */
+  --calc-bg:         #F4F8F9;    /* lichte blauwtint van origineel */
+  --calc-ink:        #2D3E50;    /* originele donkere kleur */
+  --calc-border:     #D0D6DB;
+  --calc-muted:      #7A8A99;
+  --calc-subtle:     #A8B5C1;
+
+  /* Status badges */
+  --live-bg:    #DCF0E5; --live-ink:    #1A5C38;
+  --soon-bg:    #F5F0E8; --soon-ink:    #8A6A30;
+  --plan-bg:    #F0F0EE; --plan-ink:    #7A7A72;
+  --future-bg:  #F3EEF8; --future-ink:  #5E3B82;
+  --now-bg:     #DDEEFF; --now-ink:     #1A3F7A;
+
+  /* Typografie */
+  --font-body:    'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Fraunces', Georgia, serif;
+
+  /* Ruimte & vorm */
+  --r-sm:   8px;
+  --r:      12px;
+  --r-lg:   16px;
+
+  /* Schaduwen */
+  --shadow-xs: 0 1px 3px rgba(28,43,58,.06);
+  --shadow-sm: 0 1px 6px rgba(28,43,58,.07), 0 1px 2px rgba(28,43,58,.04);
+  --shadow:    0 2px 12px rgba(28,43,58,.09), 0 1px 3px rgba(28,43,58,.04);
+  --shadow-md: 0 4px 20px rgba(28,43,58,.11), 0 2px 6px rgba(28,43,58,.05);
+
+  --ease: cubic-bezier(.4, 0, .2, 1);
+}
+
+/* ── FONT IMPORT ── */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+/* ── BASE ── */
 html {
   font-size: 16px;
+  scroll-behavior: smooth;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-  background: #F4F8F9;
-  color: #2D3E50;
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
 }
 
-/* ========================================================================== */
-/* CONTAINER */
-/* ========================================================================== */
+/* Subtiele ruis-textuur (visuele diepte zonder afleiding) */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  opacity: .018;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px;
+}
+
+/* ==========================================================================
+   TYPOGRAFIE
+   ========================================================================== */
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -.01em;
+  color: var(--ink);
+}
+
+h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 2.1rem); }
+h3 { font-size: 1.15rem; font-weight: 600; }
+h4 { font-size: .95rem;  font-weight: 600; }
+
+/* Italic accent in titels */
+h1 em, h2 em { font-style: italic; color: var(--accent); }
+
+p {
+  font-size: .95rem;
+  color: var(--ink-2);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+code, pre {
+  font-family: 'SF Mono', 'Fira Mono', 'Menlo', monospace;
+  font-size: .82em;
+  background: var(--surface-2);
+  border-radius: 4px;
+}
+
+code { padding: .1em .4em; }
+
+/* ==========================================================================
+   LAYOUT — HUB (brede pagina's)
+   ========================================================================== */
+
+/* Gebruik .page-hub op <body> of wrapper voor hub-stijl layout */
+.page-hub .container,
+.container-wide {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 4rem);
+  position: relative;
+  z-index: 1;
+}
+
+.section-hub {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem);
+  position: relative;
+  z-index: 1;
+}
+
+.divider {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 4rem);
+  border-top: 1px solid var(--border);
+}
+
+/* ==========================================================================
+   LAYOUT — CALCULATOR (smalle gecentreerde pagina's)
+   Behoudt de originele werking van de bestaande calculatoren
+   ========================================================================== */
 
 .container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  max-width: 480px;
+  max-width: 520px;
   margin: 0 auto;
-  padding: 40px 24px;
+  padding: 40px 24px 60px;
   width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
-/* ========================================================================== */
-/* HEADER */
-/* ========================================================================== */
+/* ==========================================================================
+   NAVIGATIE (hub + terugknop in calculatoren)
+   ========================================================================== */
+
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 58px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(1.25rem, 5vw, 4rem);
+  background: rgba(248,247,244,.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.2rem; font-weight: 600; letter-spacing: -.01em;
+  color: var(--ink); text-decoration: none;
+  display: flex; align-items: center; gap: .45rem;
+}
+
+.nav-logo-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent); flex-shrink: 0; margin-top: 1px;
+}
+
+.nav-links {
+  display: flex; align-items: center; gap: 1.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: .85rem; color: var(--ink-2);
+  text-decoration: none; transition: color .15s var(--ease);
+}
+
+.nav-links a:hover { color: var(--ink); }
+
+/* Terugknop in calculatoren */
+.nav-back {
+  font-size: .82rem; color: var(--ink-2);
+  text-decoration: none; display: flex; align-items: center; gap: .35rem;
+  transition: color .15s, gap .15s;
+}
+
+.nav-back:hover { color: var(--ink); gap: .5rem; }
+
+/* Body padding voor vaste nav */
+body.has-nav { padding-top: 58px; }
+
+/* ==========================================================================
+   HEADER (originele calculator header, behouden)
+   ========================================================================== */
 
 .header {
   text-align: center;
@@ -51,616 +241,567 @@ body {
 }
 
 .header h1 {
-  font-size: 28px;
+  font-size: 1.6rem;
   font-weight: 600;
+  font-family: var(--font-display);
+  color: var(--ink);
+  letter-spacing: -.02em;
   margin: 0;
-  color: #2D3E50;
-  letter-spacing: -0.5px;
 }
 
 .header p {
   font-size: 14px;
-  color: #7A8A99;
-  margin: 8px 0 0 0;
-  font-weight: 400;
+  color: var(--ink-3);
+  margin: 8px 0 0;
+  font-weight: 300;
 }
 
-/* ========================================================================== */
-/* MAIN */
-/* ========================================================================== */
+/* ==========================================================================
+   SECTION HEADER (hub)
+   ========================================================================== */
 
-.main {
-  width: 100%;
+.section-head { margin-bottom: 2.5rem; }
+
+.section-eyebrow {
+  display: block;
+  font-size: .72rem; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink-3); margin-bottom: .6rem;
 }
 
-/* ========================================================================== */
-/* SECTION */
-/* ========================================================================== */
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-weight: 400; letter-spacing: -.01em; line-height: 1.2;
+}
+
+.section-desc {
+  margin-top: .55rem;
+  font-size: .88rem; color: var(--ink-2);
+  line-height: 1.7; font-weight: 300; max-width: 480px;
+}
+
+/* ==========================================================================
+   CALCULATOR SECTIES (originele .section, behouden)
+   ========================================================================== */
+
+.main { width: 100%; }
 
 .section {
   margin-bottom: 32px;
   width: 100%;
-}
-
-.section-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: #2D3E50;
-  margin: 0 0 16px 0;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  opacity: 0.7;
-}
-
-/* ========================================================================== */
-/* BUTTONS - SYSTEM SELECTION */
-/* ========================================================================== */
-
-.button-group {
-  display: flex;
-  gap: 12px;
-  width: 100%;
-}
-
-.btn {
-  flex: 1;
-  padding: 14px 16px;
-  height: 44px;
-  border-radius: 10px;
-  border: 1px solid #D0D6DB;
-  background: white;
-  color: #2D3E50;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 200ms ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(45, 62, 80, 0.08);
-}
-
-.btn:active {
-  transform: scale(0.98);
-}
-
-.btn.active {
-  background: #2D3E50;
-  color: white;
-  border-color: #2D3E50;
-}
-
-.btn-label {
-  display: block;
-}
-
-.btn-icon {
-  font-size: 16px;
-  opacity: 0.6;
-}
-
-.btn.active .btn-icon {
-  opacity: 1;
-}
-
-/* ========================================================================== */
-/* SELECTED SYSTEM */
-/* ========================================================================== */
-
-.selected-system {
-  font-size: 13px;
-  color: #7A8A99;
-  margin-top: 12px;
-  padding: 8px 0;
-}
-
-/* ========================================================================== */
-/* INPUT MODE */
-/* ========================================================================== */
-
-.input-mode-toggle {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #E8EEF2;
-}
-
-.radio-label {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  font-size: 14px;
-  color: #2D3E50;
-  gap: 10px;
-}
-
-.radio-label input[type="radio"] {
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-  accent-color: #2D3E50;
-}
-
-/* ========================================================================== */
-/* INPUT GROUPS */
-/* ========================================================================== */
-
-.input-group {
-  margin-bottom: 16px;
-  width: 100%;
-  animation: fadeIn 200ms ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.input-group label {
-  display: block;
-  font-size: 13px;
-  font-weight: 500;
-  color: #2D3E50;
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  opacity: 0.8;
-}
-
-.input-field {
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid #D0D6DB;
-  font-size: 16px;
-  font-family: inherit;
-  color: #2D3E50;
-  background: white;
-  transition: all 200ms ease;
-}
-
-.input-field:focus {
-  outline: none;
-  border-color: #2D3E50;
-  box-shadow: 0 0 0 3px rgba(45, 62, 80, 0.1);
-}
-
-.input-field::placeholder {
-  color: #A8B5C1;
-}
-
-/* ========================================================================== */
-/* TWO COLUMN */
-/* ========================================================================== */
-
-.two-column {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.two-column .input-group {
-  margin-bottom: 0;
-}
-
-/* ========================================================================== */
-/* DIVIDER */
-/* ========================================================================== */
-
-.divider {
-  height: 1px;
-  background: #E8EEF2;
-  margin: 24px 0;
-}
-
-/* ========================================================================== */
-/* RESULTS */
-/* ========================================================================== */
-
-.results-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  animation: fadeIn 200ms ease;
-}
-
-.results-group {
-  padding: 0;
-}
-
-.results-group-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: #2D3E50;
-  margin-bottom: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  opacity: 0.7;
-}
-
-.result-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid #F0F4F6;
-}
-
-.result-item:last-child {
-  border-bottom: none;
-}
-
-.result-label {
-  font-size: 14px;
-  color: #2D3E50;
-  font-weight: 500;
-}
-
-.result-value {
-  font-size: 18px;
-  font-weight: 600;
-  color: #2D3E50;
-  min-width: 50px;
-  text-align: right;
-}
-
-.results-divider {
-  height: 1px;
-  background: #E8EEF2;
-  margin: 16px 0;
-}
-
-/* ========================================================================== */
-/* SUMMARY */
-/* ========================================================================== */
-
-.summary-info {
-  font-size: 13px;
-  color: #7A8A99;
-  margin-top: 16px;
-  padding: 12px 0;
-  border-top: 1px solid #E8EEF2;
-}
-
-.summary-info strong {
-  color: #2D3E50;
-  font-weight: 600;
-}
-
-/* ========================================================================== */
-/* EMPTY STATE */
-/* ========================================================================== */
-
-.empty-state {
-  text-align: center;
-  padding: 40px 0;
-}
-
-.empty-state-icon {
-  display: block;
-  font-size: 48px;
-  margin-bottom: 16px;
-  opacity: 0.4;
-}
-
-.empty-state-text {
-  font-size: 14px;
-  color: #7A8A99;
-  margin: 0;
-}
-
-/* ========================================================================== */
-/* INFO TEXT */
-/* ========================================================================== */
-
-.info-text {
-  font-size: 13px;
-  color: #A8B5C1;
-  margin-top: 8px;
-  font-style: italic;
-}
-
-/* ========================================================================== */
-/* FOOTER */
-/* ========================================================================== */
-
-.footer {
-  display: none;
-}
-
-/* ========================================================================== */
-/* HIDDEN */
-/* ========================================================================== */
-
-.hidden {
-  display: none !important;
-}
-
-/* ========================================================================== */
-/* RESPONSIVE */
-/* ========================================================================== */
-
-@media (max-width: 480px) {
-  .container {
-    padding: 32px 20px;
-  }
-
-  .header h1 {
-    font-size: 24px;
-  }
-
-  .header {
-    margin-bottom: 36px;
-  }
-
-  .btn {
-    height: 44px;
-    font-size: 14px;
-  }
-
-  .two-column {
-    grid-template-columns: 1fr;
-  }
-
-  .result-value {
-    font-size: 16px;
-  }
-}
-
-/* ========================================================================== */
-/* ANIMATIONS */
-/* ========================================================================== */
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.section {
   animation: slideIn 200ms ease;
 }
 
-/* ========================================================================== */
-/* PRINT */
-/* ========================================================================== */
-
-@media print {
-  body {
-    background: white;
-  }
-
-  .container {
-    padding: 0;
-  }
+.section-title-calc {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.7;
+  font-family: var(--font-body);
 }
 
-/* ========================================================================== */
-/* FASE 2 - RUIMTES TABEL */
-/* ========================================================================== */
+/* ==========================================================================
+   KNOPPEN
+   ========================================================================== */
 
-/* Tabel Container */
-.table-wrapper {
-    width: 100%;
-    overflow-x: auto;
-    margin: 20px 0;
-    border-radius: 10px;
-    border: 1px solid #E8EEF2;
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .4rem;
+  font-family: var(--font-body);
+  font-size: .875rem; font-weight: 500;
+  padding: .65rem 1.35rem;
+  border-radius: var(--r-sm);
+  border: 1.5px solid transparent;
+  cursor: pointer; text-decoration: none;
+  transition: transform .15s var(--ease), box-shadow .15s var(--ease), opacity .15s, background .15s;
+  white-space: nowrap; line-height: 1;
 }
 
-/* Tabel */
-.ruimtes-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-}
+.btn:hover  { transform: translateY(-1px); }
+.btn:active { transform: scale(.98); }
 
-/* Headers */
-.ruimtes-table thead {
-    background: #F0F4F6;
-    border-bottom: 2px solid #D0D6DB;
-}
-
-.ruimtes-table th {
-    padding: 12px;
-    font-size: 13px;
-    font-weight: 600;
-    text-align: right;
-    color: #2D3E50;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-}
-
-.ruimtes-table th:first-child {
-    text-align: left;
-}
-
-/* Table Body Cells */
-.ruimtes-table td {
-    padding: 12px;
-    border-bottom: 1px solid #E8EEF2;
-    color: #2D3E50;
-    font-size: 14px;
-    text-align: right;
-}
-
-.ruimtes-table td:first-child {
-    text-align: left;
-    font-weight: 500;
-}
-
-/* Hover effect */
-.ruimtes-table tbody tr:hover {
-    background: #F8FAFB;
-}
-
-/* Totalen Rij */
-.totalen-row {
-    font-weight: 600;
-    background: #F0F4F6;
-    border-top: 2px solid #2D3E50;
-    border-bottom: 2px solid #2D3E50;
-}
-
-.totalen-row td {
-    padding: 14px 12px;
-    border-bottom: none;
-    color: #2D3E50;
-}
-
-.totalen-row strong {
-    color: #2D3E50;
-}
-
-/* Editable Select (Platen Type) */
-.ruimtes-table select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #D0D6DB;
-    border-radius: 6px;
-    background: white;
-    color: #2D3E50;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 200ms ease;
-}
-
-.ruimtes-table select:hover {
-    border-color: #2D3E50;
-}
-
-.ruimtes-table select:focus {
-    outline: none;
-    border-color: #2D3E50;
-    box-shadow: 0 0 0 3px rgba(45, 62, 80, 0.1);
-}
-
-/* Delete Button in Table */
-.btn-delete-room {
-    background: transparent;
-    border: 1px solid #FF6B6B;
-    color: #FF6B6B;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 200ms ease;
-    min-width: 40px;
-}
-
-.btn-delete-room:hover {
-    background: #FF6B6B;
-    color: white;
-}
-
-.btn-delete-room:active {
-    transform: scale(0.98);
-}
-
-/* Table Actions */
-.table-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid #E8EEF2;
-}
-
-/* Button Styling Varianten */
-.btn-add-room {
-    flex: 1;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid #2D3E50;
-    background: white;
-    color: #2D3E50;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 200ms ease;
-    height: 44px;
-}
-
-.btn-add-room:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(45, 62, 80, 0.08);
-}
-
-.btn-add-room:active {
-    transform: scale(0.98);
-}
-
+/* Varianten */
 .btn-primary {
-    background: #2D3E50;
-    color: white;
-    border-color: #2D3E50;
+  background: var(--accent); color: #fff; border-color: var(--accent);
+  box-shadow: 0 2px 10px rgba(31,107,69,.2);
 }
-
-.btn-primary:hover {
-    background: #1a2838;
-}
+.btn-primary:hover { box-shadow: 0 4px 16px rgba(31,107,69,.3); }
 
 .btn-secondary {
-    background: white;
-    color: #2D3E50;
-    border: 1px solid #D0D6DB;
+  background: var(--surface); color: var(--ink); border-color: var(--calc-border);
+}
+.btn-secondary:hover { border-color: var(--ink-2); background: var(--surface-2); }
+
+.btn-dark {
+  background: var(--ink); color: #fff; border-color: var(--ink);
+}
+.btn-dark:hover { opacity: .85; }
+
+.btn-danger {
+  background: transparent; color: var(--error); border-color: var(--error);
+}
+.btn-danger:hover { background: var(--error); color: #fff; }
+
+/* Maten */
+.btn-sm { font-size: .8rem; padding: .45rem .9rem; }
+.btn-lg { font-size: .95rem; padding: .8rem 1.65rem; }
+.btn-full { width: 100%; }
+
+/* Originele button-group stijl (calculatoren) */
+.button-group {
+  display: flex; gap: 12px; width: 100%;
 }
 
-.btn-secondary:hover {
-    background: #F8FAFB;
+.button-group .btn {
+  flex: 1;
+  height: 44px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--calc-border);
+  background: white; color: var(--ink);
+  font-size: 15px;
 }
 
-/* Responsive Tabel */
+.button-group .btn.active {
+  background: var(--ink); color: white; border-color: var(--ink);
+}
+
+/* Toevoegen-knop (tabel) */
+.btn-add-room {
+  flex: 1; height: 44px; padding: 12px;
+  border-radius: 10px; border: 1px solid var(--ink);
+  background: white; color: var(--ink);
+  font-size: 14px; font-weight: 500;
+  cursor: pointer; font-family: var(--font-body);
+  transition: all 200ms ease;
+}
+.btn-add-room:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+
+/* Verwijder-knop (tabel rij) */
+.btn-delete-room {
+  background: transparent; border: 1px solid var(--error);
+  color: var(--error); padding: 6px 12px; border-radius: 6px;
+  font-size: 13px; cursor: pointer; transition: all 200ms ease;
+  min-width: 40px; font-family: var(--font-body);
+}
+.btn-delete-room:hover { background: var(--error); color: white; }
+
+/* ==========================================================================
+   OPTIE KNOPPEN (type-keuze in calculator)
+   ========================================================================== */
+
+.option-group { display: flex; gap: .5rem; flex-wrap: wrap; }
+
+.option-btn {
+  font-family: var(--font-body);
+  font-size: .85rem; font-weight: 500;
+  padding: .55rem 1.1rem; border-radius: var(--r-sm);
+  border: 1.5px solid var(--border);
+  background: var(--surface); color: var(--ink-2);
+  cursor: pointer; transition: all .15s var(--ease);
+}
+.option-btn:hover { border-color: var(--border-2); color: var(--ink); }
+.option-btn.active {
+  border-color: var(--accent); background: var(--accent-light); color: var(--accent-dark);
+}
+
+/* ==========================================================================
+   FORMULIER ELEMENTEN
+   ========================================================================== */
+
+.form-group   { display: flex; flex-direction: column; gap: .4rem; }
+.input-group  { margin-bottom: 16px; width: 100%; animation: fadeIn 200ms ease; }
+
+label,
+.input-group label,
+.form-label {
+  display: block;
+  font-size: 13px; font-weight: 500;
+  color: var(--ink); margin-bottom: 6px;
+  text-transform: uppercase; letter-spacing: 0.3px;
+  opacity: .8; font-family: var(--font-body);
+}
+
+.input-field,
+.form-input {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: .95rem; color: var(--ink);
+  background: var(--surface);
+  border: 1.5px solid var(--calc-border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+  -webkit-appearance: none;
+}
+
+.input-field:focus,
+.form-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(31,107,69,.1);
+}
+
+.input-field::placeholder,
+.form-input::placeholder { color: var(--calc-subtle); }
+
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239B9A93' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .9rem center;
+  background-color: var(--surface);
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+.input-mode-toggle {
+  display: flex; flex-direction: column; gap: 12px;
+  margin-bottom: 20px; padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.radio-label {
+  display: flex; align-items: center;
+  cursor: pointer; font-size: 14px; color: var(--ink); gap: 10px;
+  font-family: var(--font-body);
+}
+.radio-label input[type="radio"] {
+  width: 16px; height: 16px; cursor: pointer; accent-color: var(--accent);
+}
+
+.two-column {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.two-column .input-group { margin-bottom: 0; }
+
+/* ==========================================================================
+   RESULTATEN (calculator)
+   ========================================================================== */
+
+.results-container {
+  display: flex; flex-direction: column; gap: 20px;
+  animation: fadeIn 200ms ease;
+}
+
+.results-group { padding: 0; }
+
+.results-group-title {
+  font-size: 13px; font-weight: 600;
+  color: var(--ink); margin-bottom: 12px;
+  text-transform: uppercase; letter-spacing: 0.3px;
+  opacity: .7; font-family: var(--font-body);
+}
+
+.result-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 0; border-bottom: 1px solid #F0F4F6;
+}
+.result-item:last-child { border-bottom: none; }
+
+.result-label { font-size: 14px; color: var(--ink); font-weight: 500; }
+
+.result-value {
+  font-size: 18px; font-weight: 600;
+  color: var(--accent);           /* was var(--calc-ink), nu groen accent */
+  min-width: 50px; text-align: right;
+}
+
+.results-divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+/* Resultaten grid (hub / overzicht) */
+.result-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: var(--r); overflow: hidden;
+}
+
+.result-grid-item {
+  background: var(--surface); padding: 1.25rem 1rem; text-align: center;
+}
+
+.result-grid-value {
+  font-family: var(--font-display);
+  font-size: 2rem; font-weight: 400; line-height: 1;
+  color: var(--accent); margin-bottom: .3rem;
+}
+
+.result-grid-label {
+  font-size: .72rem; color: var(--ink-3); font-weight: 400; line-height: 1.4;
+}
+
+/* ==========================================================================
+   SAMENVATTING
+   ========================================================================== */
+
+.summary-info {
+  font-size: 13px; color: var(--calc-muted);
+  margin-top: 16px; padding: 12px 0;
+  border-top: 1px solid var(--border);
+}
+.summary-info strong { color: var(--ink); font-weight: 600; }
+
+.selected-system { font-size: 13px; color: var(--calc-muted); margin-top: 12px; padding: 8px 0; }
+
+.info-text { font-size: 13px; color: var(--calc-subtle); margin-top: 8px; font-style: italic; }
+
+/* ==========================================================================
+   TABEL (ruimtes / werksoorten)
+   ========================================================================== */
+
+.table-wrapper,
+.table-wrap {
+  width: 100%; overflow-x: auto;
+  margin: 20px 0; border-radius: var(--r);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+}
+
+.ruimtes-table,
+table {
+  width: 100%; border-collapse: collapse;
+  background: var(--surface); font-size: .875rem;
+}
+
+.ruimtes-table thead,
+thead {
+  background: var(--surface-2);
+  border-bottom: 2px solid var(--border);
+}
+
+.ruimtes-table th,
+thead th {
+  padding: 12px; font-size: 12px; font-weight: 600;
+  text-align: right; color: var(--ink);
+  text-transform: uppercase; letter-spacing: .4px;
+  white-space: nowrap; font-family: var(--font-body);
+}
+
+.ruimtes-table th:first-child,
+thead th:first-child { text-align: left; }
+
+.ruimtes-table td,
+tbody td {
+  padding: 12px; border-bottom: 1px solid var(--border);
+  color: var(--ink-2); font-size: 14px;
+  text-align: right; font-weight: 300;
+}
+
+.ruimtes-table td:first-child,
+tbody td:first-child { text-align: left; color: var(--ink); font-weight: 500; }
+
+.ruimtes-table tbody tr:hover,
+tbody tr:hover { background: #FAFAF8; }
+
+.ruimtes-table tbody tr:last-child td,
+tbody tr:last-child td { border-bottom: none; }
+
+/* Totalen rij */
+.totalen-row,
+tfoot tr {
+  font-weight: 600; background: var(--surface-2);
+  border-top: 2px solid var(--ink);
+}
+
+.totalen-row td,
+tfoot td {
+  padding: 14px 12px; border-bottom: none;
+  color: var(--ink); font-size: .875rem; font-weight: 600;
+}
+
+/* Select in tabel */
+.ruimtes-table select {
+  width: 100%; padding: 8px; border: 1px solid var(--calc-border);
+  border-radius: 6px; background: white; color: var(--ink);
+  font-size: 14px; cursor: pointer; transition: all 200ms ease;
+  font-family: var(--font-body);
+}
+.ruimtes-table select:hover { border-color: var(--ink); }
+.ruimtes-table select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(31,107,69,.1); }
+
+/* Tabel acties balk */
+.table-actions {
+  display: flex; gap: 12px; margin-top: 20px;
+  padding-top: 20px; border-top: 1px solid var(--border);
+}
+
+/* ==========================================================================
+   BADGES / STATUS
+   ========================================================================== */
+
+.badge {
+  display: inline-flex; align-items: center;
+  font-size: .68rem; font-weight: 600;
+  letter-spacing: .07em; text-transform: uppercase;
+  padding: .25rem .65rem; border-radius: 20px;
+  white-space: nowrap; font-family: var(--font-body);
+}
+
+.badge-live    { background: var(--live-bg);   color: var(--live-ink); }
+.badge-soon    { background: var(--soon-bg);   color: var(--soon-ink); }
+.badge-planned { background: var(--plan-bg);   color: var(--plan-ink); }
+.badge-future  { background: var(--future-bg); color: var(--future-ink); }
+.badge-now     { background: var(--now-bg);    color: var(--now-ink); }
+.badge-done    { background: var(--live-bg);   color: var(--live-ink); }
+
+/* ==========================================================================
+   MELDINGEN / ALERTS
+   ========================================================================== */
+
+.alert {
+  padding: .85rem 1rem; border-radius: var(--r-sm);
+  font-size: .875rem; line-height: 1.5;
+  border: 1px solid transparent;
+}
+.alert-error   { background: var(--error-light); color: #7A2D12; border-color: #F5C6B4; }
+.alert-success { background: var(--live-bg);      color: var(--live-ink); border-color: #A8DBC0; }
+.alert-info    { background: var(--now-bg);       color: var(--now-ink); border-color: #B3CFEE; }
+
+/* ==========================================================================
+   LEGE STAAT
+   ========================================================================== */
+
+.empty-state { text-align: center; padding: 40px 0; }
+.empty-state-icon { display: block; font-size: 48px; margin-bottom: 16px; opacity: .4; }
+.empty-state-text { font-size: 14px; color: var(--calc-muted); margin: 0; }
+
+/* ==========================================================================
+   KAARTEN (hub)
+   ========================================================================== */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-sm);
+}
+.card-pad    { padding: 1.75rem; }
+.card-pad-lg { padding: 2.25rem; }
+
+/* ==========================================================================
+   SCHEIDINGSLIJNEN
+   ========================================================================== */
+
+hr, .divider-line {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 24px 0;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+/* Calculator footer: verborgen (origineel gedrag) */
+.footer { display: none; }
+
+/* Hub footer */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem clamp(1.25rem, 5vw, 4rem);
+  position: relative; z-index: 1;
+  display: block;
+}
+
+.site-footer-inner {
+  max-width: 1160px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 1.5rem; flex-wrap: wrap;
+}
+
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 1rem; font-weight: 600;
+  color: var(--ink); text-decoration: none;
+  display: flex; align-items: center; gap: .4rem;
+}
+
+.footer-copy { font-size: .78rem; color: var(--ink-3); margin-top: .2rem; font-weight: 300; }
+
+.footer-links { display: flex; gap: 1.75rem; list-style: none; flex-wrap: wrap; }
+.footer-links a { font-size: .82rem; color: var(--ink-2); text-decoration: none; transition: color .15s; }
+.footer-links a:hover { color: var(--ink); }
+
+/* ==========================================================================
+   ANIMATIES
+   ========================================================================== */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Animatie helper classes */
+.anim-up   { animation: fadeUp .45s cubic-bezier(.4,0,.2,1) both; }
+.anim-up-1 { animation: fadeUp .45s .10s cubic-bezier(.4,0,.2,1) both; }
+.anim-up-2 { animation: fadeUp .45s .18s cubic-bezier(.4,0,.2,1) both; }
+.anim-up-3 { animation: fadeUp .45s .26s cubic-bezier(.4,0,.2,1) both; }
+.anim-up-4 { animation: fadeUp .45s .34s cubic-bezier(.4,0,.2,1) both; }
+
+/* ==========================================================================
+   HULPKLASSEN
+   ========================================================================== */
+
+.hidden    { display: none !important; }
+.sr-only   { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+.text-muted { color: var(--ink-3); }
+.text-accent { color: var(--accent); }
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
 @media (max-width: 768px) {
-    .ruimtes-table {
-        font-size: 12px;
-    }
-    
-    .ruimtes-table th,
-    .ruimtes-table td {
-        padding: 8px;
-    }
-    
-    .table-wrapper {
-        overflow-x: scroll;
-        -webkit-overflow-scrolling: touch;
-    }
-    
-    .table-actions {
-        flex-direction: column;
-    }
-    
-    .btn-add-room,
-    .btn-primary,
-    .btn-secondary {
-        width: 100%;
-    }
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+
+  .nav-links { display: none; }
+
+  .result-grid { grid-template-columns: 1fr 1fr; }
+
+  .ruimtes-table, table { font-size: .8rem; }
+  .ruimtes-table th, .ruimtes-table td,
+  thead th, tbody td, tfoot td { padding: 8px; }
+
+  .table-actions { flex-direction: column; }
+  .btn-add-room, .table-actions .btn { width: 100%; }
+
+  .site-footer-inner { flex-direction: column; align-items: flex-start; }
 }
 
-/* Print Styling (voor later PDF) */
+@media (max-width: 480px) {
+  .container { padding: 32px 20px 48px; }
+  .header h1 { font-size: 1.4rem; }
+  .header   { margin-bottom: 32px; }
+  .btn      { height: 44px; font-size: 14px; }
+  .two-column { grid-template-columns: 1fr; }
+  .result-value { font-size: 16px; }
+  .result-grid { grid-template-columns: 1fr; }
+  .option-group { flex-direction: column; }
+}
+
+/* ==========================================================================
+   PRINT
+   ========================================================================== */
+
 @media print {
-    .table-actions,
-    .btn-add-to-table,
-    .btn-delete-room {
-        display: none;
-    }
+  body { background: white; }
+  body::before { display: none; }
+  .container { padding: 0; }
+  .nav, .site-footer, .table-actions,
+  .btn-add-to-table, .btn-delete-room,
+  .btn-add-room { display: none; }
 }
-
-/* ========================================================================== */
