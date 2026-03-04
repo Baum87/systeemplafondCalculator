@@ -1,272 +1,291 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XJ4TWPWTQ8"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XJ4TWPWTQ8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XJ4TWPWTQ8');
+  </script>
 
-      gtag('config', 'G-XJ4TWPWTQ8');
-    </script>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Systeemplafond Rekenmachine</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=20260304">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Systeemplafond Calculator</title>
+  <link rel="stylesheet" href="assets/css/style.css?v=2.0" />
 </head>
 <body class="has-nav">
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <h1>Systeemplafond Calculator</h1>
-            <p class="subtitle">Materiaalberekening <br> gebasseerd op API Quicklock <br> HP=0,84 m/m2, TP1200=1,67 m/m2, TP600=0,84 m/m2 </p>
-        </header>
 
-        <!-- Main Content -->
-        <main class="main">
-            
-            <!-- Systeem Keuze -->
-            <section class="section">
-                <h2 class="section-title">Selecteer Systeemtype</h2>
-                <div class="button-group">
-                    <button class="btn btn-system" data-system="600x600">
-                        <span class="btn-label">600x600 systeem</span>
-                    </button>
-                    <button class="btn btn-system" data-system="600x1200">
-                        <span class="btn-label">600x1200 systeem</span>
-                    </button>
-                </div>
-                <div id="selected-system" class="selected-system" style="display: none;">
-                    ✓ <strong id="system-name"></strong> geselecteerd
-                </div>
-            </section>
+  <div class="app-wrapper">
 
-            <!-- Invoer Sectie -->
-            <section class="section" id="input-section" style="display: none;">
-                <h2 class="section-title">Voer Afmetingen in</h2>
-                
-                <!-- Input Mode Toggle -->
-                <div class="input-mode-toggle">
-                    <label class="radio-label">
-                        <input type="radio" name="input-mode" value="sqm" checked>
-                        Voer vierkante meters rechtstreeks in
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="input-mode" value="dimensions">
-                        Voer lengte en breedte in
-                    </label>
-                </div>
+    <!-- ── HEADER ── -->
+    <header class="app-header">
+      <div class="header-inner">
+        <div class="brand">
+          <span class="brand-icon">🔲</span>
+          <div>
+            <h1>Systeemplafond</h1>
+            <p class="brand-sub">Materiaalcalculator — API Quicklock</p>
+          </div>
+        </div>
+        <div class="header-rechts">
+          <div class="project-invoer">
+            <label for="project-naam">Projectnaam</label>
+            <input type="text" id="project-naam" placeholder="bijv. Verbouwing Kantoor A" autocomplete="off" />
+          </div>
+          <button class="btn btn-reset" id="btn-alles-reset" title="Verwijder alle ruimtes en herstel projectnaam">↺ Alles verwijderen</button>
+        </div>
+      </div>
+    </header>
 
-                <!-- Vierkante Meters Input -->
-                <div id="sqm-input-group" class="input-group">
-                    <label for="vierkante-meters">Vierkante Meters (m²)</label>
-                    <input 
-                        type="number" 
-                        id="vierkante-meters" 
-                        min="0.1" 
-                        step="0.5" 
-                        value="10"
-                        class="input-field"
-                    >
-                </div>
+    <main class="main-content">
 
-                <!-- Dimensions Input -->
-                <div id="dimensions-input-group" class="input-group" style="display: none;">
-                    <div class="two-column">
-                        <div>
-                            <label for="lengte">Lengte (m)</label>
-                            <input 
-                                type="number" 
-                                id="lengte" 
-                                min="0.1" 
-                                step="0.5" 
-                                value="5"
-                                class="input-field"
-                            >
-                        </div>
-                        <div>
-                            <label for="breedte">Breedte (m)</label>
-                            <input 
-                                type="number" 
-                                id="breedte" 
-                                min="0.1" 
-                                step="0.5" 
-                                value="4"
-                                class="input-field"
-                            >
-                        </div>
-                    </div>
-                    <div id="calculated-sqm" class="info-text"></div>
-                </div>
+      <!-- ── INPUT KAART ── -->
+      <section class="card input-card">
+        <h2 class="card-title">Ruimte invoer</h2>
 
-                <!-- Divider -->
-                <div class="divider"></div>
+        <div class="form-grid">
 
-                <!-- Strekkende Meters -->
-                <div class="input-group">
-                    <label for="strekkende-meters">Strekkende Meters (m)</label>
-                    <input 
-                        type="number" 
-                        id="strekkende-meters" 
-                        min="0.1" 
-                        step="0.5" 
-                        value="10"
-                        class="input-field"
-                    >
-                </div>
-            </section>
+          <!-- Systeem type -->
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label>Systeemtype</label>
+            <div class="button-group" style="margin-top: 4px;">
+              <button class="btn btn-system" data-system="600x600">
+                <span class="btn-label">600×600 systeem</span>
+              </button>
+              <button class="btn btn-system" data-system="600x1200">
+                <span class="btn-label">600×1200 systeem</span>
+              </button>
+            </div>
+          </div>
 
-            <!-- Resultaten Sectie -->
-            <section class="section" id="results-section" style="display: none;">
-                <h2 class="section-title">Materiaalvereisten</h2>
-                
-                <div class="results-container">
-                    <!-- Profielen -->
-                    <div class="results-group">
-                        <h3 class="results-group-title">Profielen</h3>
-                        
-                        <div class="result-item">
-                            <span class="result-label">Aantal Hoofdprofielen 3600 mm</span>
-                            <span class="result-value" id="result-hoofdprofielen">-</span>
-                        </div>
+          <!-- Omschrijving -->
+          <div class="form-group">
+            <label for="ruimte-naam">Omschrijving</label>
+            <input type="text" id="ruimte-naam" placeholder="bijv. Kantoor, Gang, Toilet" value="Ruimte 1" />
+          </div>
 
-                        <div class="result-item">
-                            <span class="result-label">Aantal Tussenprofielen 1200 mm</span>
-                            <span class="result-value" id="result-tussenprofiel-1200">-</span>
-                        </div>
+          <!-- Invoermethode -->
+          <div class="form-group">
+            <label>Invoermethode</label>
+            <div class="input-mode-toggle" style="margin: 4px 0 0; padding: 0; border: none;">
+              <label class="radio-label">
+                <input type="radio" name="input-mode" value="sqm" checked />
+                Vierkante meters
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="input-mode" value="dimensions" />
+                Lengte × Breedte
+              </label>
+            </div>
+          </div>
 
-                        <div class="result-item" id="result-tussenprofiel-600-item" style="display: none;">
-                            <span class="result-label">Aantal Tussenprofielen 600 mm</span>
-                            <span class="result-value" id="result-tussenprofiel-600">-</span>
-                        </div>
+          <!-- m² invoer -->
+          <div class="form-group" id="sqm-input-group">
+            <label for="vierkante-meters">Oppervlakte (m²)</label>
+            <input type="number" id="vierkante-meters" min="0.1" step="0.5" value="10" />
+          </div>
 
-                        <div class="result-item">
-                            <span class="result-label">Aantal Plafondplaten</span>
-                            <span class="result-value" id="result-plafondplaten">-</span>
-                        </div>
-                    </div>
+          <!-- Lengte × Breedte invoer -->
+          <div class="form-group" id="dimensions-input-group" style="display: none;">
+            <label>Lengte (m)</label>
+            <input type="number" id="lengte" min="0.1" step="0.5" value="5" />
+          </div>
 
-                    <!-- Divider -->
-                    <div class="results-divider"></div>
+          <div class="form-group" id="breedte-input-group" style="display: none;">
+            <label>Breedte (m)</label>
+            <input type="number" id="breedte" min="0.1" step="0.5" value="4" />
+          </div>
 
-                    <!-- Randmaterialen -->
-                    <div class="results-group">
-                        <h3 class="results-group-title">Randmaterialen</h3>
+          <!-- Afgeleide m² (readonly) -->
+          <div class="form-group derived" id="derived-sqm-group" style="display: none;">
+            <label>Berekende oppervlakte (m²)</label>
+            <div class="derived-value" id="calculated-sqm">—</div>
+          </div>
 
-                        <div class="result-item">
-                            <span class="result-label">Aantal Hoeklijnen 3000 mm</span>
-                            <span class="result-value" id="result-hoeklijn">-</span>
-                        </div>
+          <!-- Strekkende meters -->
+          <div class="form-group">
+            <label for="strekkende-meters">Omtrek / Randlengte (m)</label>
+            <input type="number" id="strekkende-meters" min="0.1" step="0.5" value="10" />
+          </div>
 
-                        <div class="result-item">
-                            <span class="result-label">Aantal Kantlaten 3000 mm</span>
-                            <span class="result-value" id="result-kantlat">-</span>
-                        </div>
-                    </div>
-                </div>
+        </div>
 
+        <div class="card-actions">
+          <button class="btn btn-primary" id="btn-add-to-table" disabled>+ Toevoegen aan lijst</button>
+          <div class="calc-status" id="calc-status"></div>
+        </div>
+      </section>
 
-                <!-- Summary -->
-                <div class="summary-info">
-                    Berekend op: <strong id="summary-sqm">-</strong> m² oppervlak | <strong id="summary-meters">-</strong> m strekkende meters | <strong id="summary-system">-</strong> | Deze berekening is indicatief en bedoeld als hulpmiddel. 
-                    Aan de uitkomsten kunnen geen rechten worden ontleend. Gebruik geschiedt op eigen risico. 
-                </div>
+      <!-- ── RESULTATEN SECTIE ── -->
+      <section class="results-section" id="results-section">
 
-                <!-- FASE 2: Room Name Input -->
-                <br>
-                <div class="input-group">
-                    <label for="ruimte-naam">Ruimte/Verdieping (bijv. Kantoor, Gang)</label>
-                    <input 
-                        type="text" 
-                        id="ruimte-naam" 
-                        placeholder="Bijv. Kantoor, Gang, Toilet..."
-                        class="input-field"
-                        value="Ruimte 1"
-                    >
-                </div>
-                
-                <!-- FASE 2: Add to Table Button -->
-                <br>
-                <button id="btn-add-to-table" class="btn btn-add-room" style="display: none;">
-                    ➕ Toevoegen aan Tabel
-                </button>
-              
+        <!-- Ruimte overzicht -->
+        <div class="table-card">
+          <div class="table-header">
+            <h3>Ruimteoverzicht</h3>
+            <span class="table-count" id="count-ruimtes">0 ruimtes</span>
+          </div>
+          <div class="table-wrapper">
+            <table id="ruimtes-table">
+              <thead>
+                <tr>
+                  <th>Omschrijving</th>
+                  <th>Systeem</th>
+                  <th>m²</th>
+                  <th>Omtrek (m)</th>
+                  <th>Platen</th>
+                  <th>H-prof</th>
+                  <th>T1200</th>
+                  <th>T600</th>
+                  <th>Hoeklijn</th>
+                  <th>Kantlat</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="ruimtes-tbody">
+                <tr class="empty-row"><td colspan="11">Nog geen ruimtes toegevoegd</td></tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td class="totaal-label">TOTAAL</td>
+                  <td>—</td>
+                  <td class="totaal-val" id="total-sqm">0</td>
+                  <td class="totaal-val" id="total-meters">0</td>
+                  <td class="totaal-val" id="total-platen">0</td>
+                  <td class="totaal-val" id="total-hoofdprofiel">0</td>
+                  <td class="totaal-val" id="total-tussenprofiel1200">0</td>
+                  <td class="totaal-val" id="total-tussenprofiel600">0</td>
+                  <td class="totaal-val" id="total-hoeklijn">0</td>
+                  <td class="totaal-val" id="total-kantlat">0</td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
 
-            </section>
+        <!-- Totaaloverzicht materialen -->
+        <div class="table-card totalen-card">
+          <div class="table-header">
+            <h3>Totaaloverzicht <span class="tag">alle materialen</span></h3>
+          </div>
+          <div class="table-wrapper">
+            <table id="tabel-totalen">
+              <thead>
+                <tr>
+                  <th>Materiaal</th>
+                  <th>Aantal</th>
+                  <th>Eenheid</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="tbody-totalen">
+                <tr class="empty-row"><td colspan="4">Nog geen ruimtes toegevoegd</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-            <!-- Empty State -->
-            <section class="section empty-state" id="empty-state">
-                <div class="empty-state-content">
-                    <p class="empty-state-text">Selecteer een systeemtype om te beginnen met berekenen</p>
-                </div>
-            </section>
-            
-            <!-- FASE 2: Ruimtes Tabel Section -->
-            <section class="section" id="ruimtes-section" style="display: none;">
-                <h2 class="section-title">Ruimtes Overzicht</h2>
-                
-                <div class="table-wrapper">
-                    <table id="ruimtes-table" class="ruimtes-table">
-                        <thead>
-                            <tr>
-                                <th>Omschrijving</th>
-                                <th>m²</th>
-                                <th>m</th>
-                                <th>Platen Type</th>
-                                <th>H-prof</th>
-                                <th>T1200</th>
-                                <th>T600</th>
-                                <th>Hoeklijn</th>
-                                <th>Kantlat</th>
-                                <th>Acties</th>
-                            </tr>
-                        </thead>
-                        <tbody id="ruimtes-tbody">
-                            <!-- Gevuld via JavaScript -->
-                        </tbody>
-                        <tfoot>
-                            <tr class="totalen-row">
-                                <td><strong>TOTAAL</strong></td>
-                                <td id="total-sqm">0</td>
-                                <td id="total-meters">0</td>
-                                <td>-</td>
-                                <td id="total-hoofdprofiel">0</td>
-                                <td id="total-tussenprofiel1200">0</td>
-                                <td id="total-tussenprofiel600">0</td>
-                                <td id="total-hoeklijn">0</td>
-                                <td id="total-kantlat">0</td>
-                                <td>-</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-                
-                <div class="table-actions">
-                    <button id="btn-add-new-room" class="btn btn-primary">
-                        + Voeg Ruimte Toe
-                    </button>
-                    <button id="btn-download-pdf" class="btn btn-secondary" style="display: none;">
-                        📥 Download PDF (Fase 3)
-                    </button>
-                </div>
-                
-            </section>
+        <!-- Profielen detail -->
+        <div class="sectie-scheiding"><span>Gedetailleerd overzicht</span></div>
 
+        <div class="table-card">
+          <div class="table-header">
+            <h3>Hoofdprofielen <span class="tag">3600 mm</span></h3>
+          </div>
+          <div class="table-wrapper">
+            <table id="tabel-hoofdprofielen">
+              <thead>
+                <tr>
+                  <th>Ruimte</th>
+                  <th>Systeem</th>
+                  <th>m²</th>
+                  <th>Aantal (st)</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-hoofdprofielen">
+                <tr class="empty-row"><td colspan="4">—</td></tr>
+              </tbody>
+              <tfoot id="tfoot-hoofdprofielen"></tfoot>
+            </table>
+          </div>
+        </div>
 
-        </main>
+        <div class="table-card">
+          <div class="table-header">
+            <h3>Tussenprofielen <span class="tag">1200 mm &amp; 600 mm</span></h3>
+          </div>
+          <div class="table-wrapper">
+            <table id="tabel-tussenprofielen">
+              <thead>
+                <tr>
+                  <th>Ruimte</th>
+                  <th>Systeem</th>
+                  <th>T1200 (st)</th>
+                  <th>T600 (st)</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-tussenprofielen">
+                <tr class="empty-row"><td colspan="4">—</td></tr>
+              </tbody>
+              <tfoot id="tfoot-tussenprofielen"></tfoot>
+            </table>
+          </div>
+        </div>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <p>Systeemplafond Rekenmachine v1.0 | Ontwikkeld door RB | 2026</p>
-        </footer>
+        <div class="table-card">
+          <div class="table-header">
+            <h3>Plafondplaten</h3>
+          </div>
+          <div class="table-wrapper">
+            <table id="tabel-platen">
+              <thead>
+                <tr>
+                  <th>Ruimte</th>
+                  <th>Systeem</th>
+                  <th>m²</th>
+                  <th>Aantal (st)</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-platen">
+                <tr class="empty-row"><td colspan="4">—</td></tr>
+              </tbody>
+              <tfoot id="tfoot-platen"></tfoot>
+            </table>
+          </div>
+        </div>
 
-    </div>
+        <div class="table-card">
+          <div class="table-header">
+            <h3>Randmaterialen <span class="tag">hoeklijn &amp; kantlat</span></h3>
+          </div>
+          <div class="table-wrapper">
+            <table id="tabel-randmaterialen">
+              <thead>
+                <tr>
+                  <th>Ruimte</th>
+                  <th>Omtrek (m)</th>
+                  <th>Hoeklijn 3000mm (st)</th>
+                  <th>Kantlat 3000mm (st)</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-randmaterialen">
+                <tr class="empty-row"><td colspan="4">—</td></tr>
+              </tbody>
+              <tfoot id="tfoot-randmaterialen"></tfoot>
+            </table>
+          </div>
+        </div>
 
-    <!-- Scripts -->
-    <script src="assets/js/api.js"></script>
-    <script src="assets/js/app.js"></script>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Scripts — ongewijzigd -->
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/app.js"></script>
 </body>
 </html>
