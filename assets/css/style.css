@@ -1,43 +1,39 @@
 /* ==========================================================================
-   AFBOUWR — Uniforme stijl v2.0
+   AFBOUWR — Uniforme stijl v3.0
    Van toepassing op:
-     • afbouwr.nl            (hub / landingspagina)
-     • metalstud.afbouwr.nl  (Metalstud Wand calculator)
-     • systeemplafond.afbouwr.nl (Systeemplafond calculator)
+     • afbouwr.nl                    (hub)
+     • metalstud.afbouwr.nl          (Metalstud Wand)
+     • systeemplafond.afbouwr.nl     (Systeemplafond)
 
-   Gebruik in elke repo:
-   Fase 1:  <link rel="stylesheet" href="style.css">
+   Gebruik:
+   Fase 1:  <link rel="stylesheet" href="style.css?v=3.0">
    Fase 2:  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afbouwr/shared@main/style.css">
    ========================================================================== */
 
-/* ── FONT IMPORT ─────────────────────────────────────────────────────────── */
+/* ── FONT IMPORT ── */
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap');
 
-/* ── RESET ───────────────────────────────────────────────────────────────── */
+/* ── RESET ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── DESIGN TOKENS ───────────────────────────────────────────────────────── */
+/* ── TOKENS ── */
 :root {
-  /* Achtergrond & oppervlakken — uit afbouwr.css */
+  /* Achtergrond */
   --bg:           #F8F7F4;
   --surface:      #FFFFFF;
   --surface-2:    #F2F1ED;
 
-  /* Tekstkleuren */
+  /* Tekst */
   --ink:          #1C2B3A;
   --ink-2:        #57564F;
   --ink-3:        #9B9A93;
 
-  /* Accent — groen */
+  /* Accent groen */
   --accent:       #1F6B45;
   --accent-light: #EDF4EF;
   --accent-dark:  #174D32;
 
-  /* Waarschuwing / actie */
-  --warn:         #C8571B;
-  --warn-light:   #FEF2EE;
-
-  /* Fout */
+  /* Fout / gevaar */
   --error:        #D94F4F;
   --error-light:  #FEF2F2;
 
@@ -46,31 +42,30 @@
   --border-2:     #CECCBF;
 
   /* Status badges */
-  --live-bg:    #DCF0E5; --live-ink:    #1A5C38;
-  --soon-bg:    #F5F0E8; --soon-ink:    #8A6A30;
-  --plan-bg:    #F0F0EE; --plan-ink:    #7A7A72;
-  --future-bg:  #F3EEF8; --future-ink:  #5E3B82;
-  --now-bg:     #DDEEFF; --now-ink:     #1A3F7A;
+  --live-bg:   #DCF0E5; --live-ink:   #1A5C38;
+  --soon-bg:   #F5F0E8; --soon-ink:   #8A6A30;
+  --plan-bg:   #F0F0EE; --plan-ink:   #7A7A72;
+  --future-bg: #F3EEF8; --future-ink: #5E3B82;
+  --now-bg:    #DDEEFF; --now-ink:    #1A3F7A;
 
   /* Typografie */
   --font:         'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-display: 'Fraunces', Georgia, serif;
   --mono:         'SF Mono', 'Fira Code', 'Menlo', monospace;
 
-  /* Vorm */
-  --r-sm:  8px;
-  --r:     12px;
-  --r-lg:  16px;
+  /* Radius */
+  --r-sm: 8px;
+  --r:    12px;
+  --r-lg: 16px;
 
   /* Schaduwen */
-  --shadow-xs: 0 1px 3px rgba(28,43,58,.05);
   --shadow:    0 2px 12px rgba(28,43,58,.08), 0 1px 3px rgba(28,43,58,.04);
   --shadow-lg: 0 8px 32px rgba(28,43,58,.10), 0 2px 8px rgba(28,43,58,.05);
 
   --ease: cubic-bezier(.4, 0, .2, 1);
 }
 
-/* ── BASE ────────────────────────────────────────────────────────────────── */
+/* ── BASE ── */
 html { font-size: 15px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 
 body {
@@ -82,7 +77,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Subtiele ruis — visuele diepte */
+/* Subtiele ruis-textuur */
 body::before {
   content: '';
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
@@ -103,10 +98,14 @@ h1, h2, h3, h4 {
   color: var(--ink);
 }
 
-h1 { font-size: clamp(1.8rem, 4vw, 3.4rem); }
-h2 { font-size: clamp(1.4rem, 3vw, 2rem); }
-h3 { font-size: 1.1rem; font-weight: 600; font-family: var(--font); letter-spacing: -.01em; }
-h4 { font-size: .9rem; font-weight: 600; font-family: var(--font); }
+/* Calculator titels gebruiken body font (compacter) */
+.card-title,
+.table-header h3,
+.section-sub,
+.results-group-title,
+.handmatig-titel {
+  font-family: var(--font);
+}
 
 h1 em, h2 em { font-style: italic; color: var(--accent); }
 
@@ -121,7 +120,7 @@ code {
 }
 
 /* ==========================================================================
-   NAVIGATIE — gedeeld door alle pagina's
+   NAVIGATIE
    ========================================================================== */
 
 .nav {
@@ -151,7 +150,6 @@ code {
 .nav-links a { font-size: .85rem; color: var(--ink-2); text-decoration: none; transition: color .15s; }
 .nav-links a:hover { color: var(--ink); }
 
-/* Terugknop in calculatoren */
 .nav-back {
   font-size: .82rem; color: var(--ink-2); text-decoration: none;
   display: flex; align-items: center; gap: .35rem;
@@ -162,46 +160,19 @@ code {
 body.has-nav { padding-top: 56px; }
 
 /* ==========================================================================
-   LAYOUT — HUB (brede pagina)
-   ========================================================================== */
-
-.section-hub {
-  max-width: 1160px; margin: 0 auto;
-  padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem);
-  position: relative; z-index: 1;
-}
-
-.divider {
-  max-width: 1160px; margin: 0 auto;
-  padding: 0 clamp(1.25rem, 5vw, 4rem);
-  border-top: 1px solid var(--border);
-}
-
-/* ==========================================================================
-   LAYOUT — CALCULATOR (metalstud wand — brede layout)
+   APP WRAPPER — gedeeld door alle calculatoren
    ========================================================================== */
 
 .app-wrapper {
-  max-width: 1200px; margin: 0 auto;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 0 clamp(1rem, 3vw, 24px) 60px;
-  position: relative; z-index: 1;
+  position: relative;
+  z-index: 1;
 }
 
 /* ==========================================================================
-   LAYOUT — CALCULATOR (systeemplafond — smalle gecentreerde layout)
-   ========================================================================== */
-
-.container {
-  min-height: 100vh;
-  display: flex; flex-direction: column;
-  justify-content: flex-start; align-items: center;
-  max-width: 520px; margin: 0 auto;
-  padding: 40px 20px 60px; width: 100%;
-  position: relative; z-index: 1;
-}
-
-/* ==========================================================================
-   APP HEADER (metalstud wand stijl — ook toepasbaar op systeemplafond)
+   APP HEADER
    ========================================================================== */
 
 .app-header {
@@ -227,27 +198,13 @@ body.has-nav { padding-top: 56px; }
 
 .brand h1 {
   font-size: 1.35rem; font-weight: 600;
-  font-family: var(--font-display);
   letter-spacing: -.02em; line-height: 1.1;
 }
 
 .brand-sub { font-size: 13px; color: var(--ink-3); margin-top: 2px; font-weight: 300; }
 
-/* Eenvoudige header variant (systeemplafond) */
-.header {
-  text-align: center; margin-bottom: 36px; width: 100%;
-}
-
-.header h1 {
-  font-size: 1.5rem; font-weight: 600;
-  font-family: var(--font-display);
-  letter-spacing: -.02em;
-}
-
-.header p { font-size: 14px; color: var(--ink-3); margin: 8px 0 0; font-weight: 300; }
-
 /* ==========================================================================
-   PROJECTNAAM INVOER (metalstud wand header rechts)
+   PROJECTNAAM INVOER
    ========================================================================== */
 
 .header-rechts {
@@ -255,6 +212,7 @@ body.has-nav { padding-top: 56px; }
 }
 
 .project-invoer { display: flex; flex-direction: column; gap: 5px; align-items: flex-end; }
+
 .project-invoer label {
   font-size: 11px; font-weight: 600; color: var(--ink-3);
   text-transform: uppercase; letter-spacing: .6px;
@@ -264,8 +222,9 @@ body.has-nav { padding-top: 56px; }
   height: 38px; padding: 0 14px;
   border: 1.5px solid var(--border); border-radius: var(--r-sm);
   font-family: var(--font); font-size: 15px; font-weight: 500;
-  color: var(--ink); background: var(--surface); width: 280px;
-  outline: none; transition: border-color .15s, box-shadow .15s;
+  color: var(--ink); background: var(--surface);
+  width: 280px; outline: none;
+  transition: border-color .15s, box-shadow .15s;
 }
 
 .project-invoer input:focus {
@@ -275,12 +234,11 @@ body.has-nav { padding-top: 56px; }
 
 .project-invoer input::placeholder { color: var(--ink-3); font-weight: 400; }
 
-/* Reset knop */
 .btn-reset {
   height: 34px; padding: 0 14px; border-radius: var(--r-sm);
   border: 1.5px solid var(--error); background: white; color: var(--error);
   font-family: var(--font); font-size: 12px; font-weight: 500;
-  cursor: pointer; white-space: nowrap; transition: all .15s; letter-spacing: .1px;
+  cursor: pointer; white-space: nowrap; transition: all .15s;
 }
 .btn-reset:hover { background: var(--error-light); }
 
@@ -298,14 +256,13 @@ body.has-nav { padding-top: 56px; }
 
 .card-title {
   font-size: 1rem; font-weight: 600;
-  letter-spacing: -.01em; margin-bottom: 20px;
-  color: var(--ink); font-family: var(--font);
+  letter-spacing: -.01em; margin-bottom: 20px; color: var(--ink);
 }
 
 .section-sub {
   font-size: 12px; font-weight: 600; color: var(--ink-2);
   text-transform: uppercase; letter-spacing: .6px;
-  margin-bottom: 16px; padding-top: 20px;
+  margin-bottom: 14px; padding-top: 18px;
   border-top: 1px solid var(--border);
 }
 
@@ -314,7 +271,7 @@ body.has-nav { padding-top: 56px; }
 }
 
 /* ==========================================================================
-   FORMULIER ELEMENTEN
+   FORM GRID & INVOER
    ========================================================================== */
 
 .form-grid {
@@ -325,51 +282,36 @@ body.has-nav { padding-top: 56px; }
 
 .form-group { display: flex; flex-direction: column; gap: 6px; }
 
-.form-group label,
-.input-group label,
-.form-label {
+.form-group label {
   font-size: 12px; font-weight: 500; color: var(--ink-2);
   text-transform: uppercase; letter-spacing: .4px;
-  font-family: var(--font);
 }
 
-/* Uniforme input stijl */
+/* Uniforme input */
 .form-group input,
 .form-group select,
-.input-field,
-.form-input {
-  height: 40px;
-  padding: 0 12px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--r-sm);
-  font-family: var(--font);
-  font-size: 14px; color: var(--ink);
-  background: var(--surface);
-  outline: none; appearance: none; -webkit-appearance: none;
+.input-field {
+  height: 40px; padding: 0 12px;
+  border: 1.5px solid var(--border); border-radius: var(--r-sm);
+  font-family: var(--font); font-size: 14px; color: var(--ink);
+  background: var(--surface); outline: none;
+  appearance: none; -webkit-appearance: none;
   transition: border-color .15s, box-shadow .15s;
   width: 100%;
 }
 
-/* Grotere padding variant voor systeemplafond stijl */
-.input-field, .form-input {
-  height: 42px; padding: 0 14px; font-size: 15px;
-}
-
 .form-group input:focus,
 .form-group select:focus,
-.input-field:focus,
-.form-input:focus {
+.input-field:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(31,107,69,.12);
 }
 
 .form-group input::placeholder,
-.input-field::placeholder,
-.form-input::placeholder { color: var(--ink-3); }
+.input-field::placeholder { color: var(--ink-3); }
 
 /* Select pijl */
-.form-group select,
-.form-select {
+.form-group select {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239B9A93' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
@@ -377,7 +319,7 @@ body.has-nav { padding-top: 56px; }
   cursor: pointer;
 }
 
-/* Derived value veld */
+/* Afgeleide waarde (readonly display) */
 .form-group.derived .derived-value {
   height: 40px; padding: 0 12px;
   border: 1.5px solid var(--border); border-radius: var(--r-sm);
@@ -387,47 +329,19 @@ body.has-nav { padding-top: 56px; }
   font-family: var(--mono);
 }
 
-/* Input mode toggle (systeemplafond) */
+/* Input mode radio (systeemplafond) */
 .input-mode-toggle {
-  display: flex; flex-direction: column; gap: 12px;
-  margin-bottom: 20px; padding-bottom: 20px;
-  border-bottom: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 8px;
+  margin-bottom: 0; padding-bottom: 0; border: none;
 }
 
 .radio-label {
-  display: flex; align-items: center; gap: 10px;
-  cursor: pointer; font-size: 14px; color: var(--ink); font-family: var(--font);
+  display: flex; align-items: center; gap: 8px;
+  cursor: pointer; font-size: 13px; color: var(--ink);
+  font-family: var(--font); font-weight: 400;
 }
 .radio-label input[type="radio"] {
-  width: 16px; height: 16px; cursor: pointer; accent-color: var(--accent);
-}
-
-/* Twee kolommen */
-.two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.two-column .input-group { margin-bottom: 0; }
-
-/* Sectie scheiding */
-.sectie-scheiding {
-  display: flex; align-items: center; gap: 14px;
-  margin: 8px 0 4px; color: var(--ink-3);
-  font-size: 11px; font-weight: 600;
-  text-transform: uppercase; letter-spacing: .7px;
-}
-.sectie-scheiding::before,
-.sectie-scheiding::after {
-  content: ''; flex: 1; height: 1px; background: var(--border);
-}
-
-/* Input group (systeemplafond stijl) */
-.input-group { margin-bottom: 16px; width: 100%; animation: fadeIn 200ms ease; }
-.main { width: 100%; }
-
-/* Sectie (systeemplafond) */
-.section { margin-bottom: 28px; width: 100%; animation: slideIn 200ms ease; }
-.section-title {
-  font-size: 12px; font-weight: 600; color: var(--ink);
-  margin: 0 0 14px; text-transform: uppercase; letter-spacing: .5px;
-  opacity: .7; font-family: var(--font);
+  width: 15px; height: 15px; cursor: pointer; accent-color: var(--accent);
 }
 
 /* Extra opties */
@@ -435,37 +349,32 @@ body.has-nav { padding-top: 56px; }
 .extra-opties.hidden { display: none; }
 
 /* ==========================================================================
-   SPECS GRID (metalstud wand — vaste kolom-indeling)
+   SPECS GRID (metalstud — vaste kolom-indeling)
    ========================================================================== */
 
 .specs-grid { display: flex; flex-direction: column; gap: 14px; }
 
-.specs-rij {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-}
+.specs-rij { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .specs-rij-2col { grid-template-columns: repeat(2, 1fr); }
 .specs-rij-1col { grid-template-columns: 1fr; max-width: 220px; }
-
 #gips-select-groep { grid-template-columns: repeat(4, 1fr); }
 
-/* VU profiel inline */
+/* VU inline */
 .vu-inline { display: flex; gap: 8px; align-items: center; }
-.vu-inline select, .vu-inline input {
+.vu-inline select,
+.vu-inline input {
   flex: 1; height: 40px; padding: 0 10px;
   border: 1.5px solid var(--border); border-radius: var(--r-sm);
   font-family: var(--font); font-size: 14px; color: var(--ink);
-  background: var(--surface); outline: none; transition: border-color .15s;
-  appearance: none; -webkit-appearance: none;
+  background: var(--surface); outline: none;
+  transition: border-color .15s; appearance: none; -webkit-appearance: none;
 }
 .vu-inline select {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239B9A93' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px;
 }
-.vu-inline select:focus, .vu-inline input:focus {
-  border-color: var(--accent); box-shadow: 0 0 0 3px rgba(31,107,69,.12);
-}
+.vu-inline select:focus,
+.vu-inline input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(31,107,69,.12); }
 
 .label-optioneel { display: flex; align-items: center; gap: 8px; }
 .optioneel-tag {
@@ -475,6 +384,16 @@ body.has-nav { padding-top: 56px; }
   text-transform: uppercase; letter-spacing: .4px;
 }
 .form-group-span { grid-column: 1 / -1; }
+
+/* Sectie scheiding */
+.sectie-scheiding {
+  display: flex; align-items: center; gap: 14px;
+  margin: 8px 0 4px; color: var(--ink-3);
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .7px;
+}
+.sectie-scheiding::before,
+.sectie-scheiding::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
 /* ==========================================================================
    KNOPPEN
@@ -492,7 +411,6 @@ body.has-nav { padding-top: 56px; }
 .btn:hover  { transform: translateY(-1px); }
 .btn:active { transform: scale(.98); }
 
-/* Varianten */
 .btn-primary {
   background: var(--accent); color: #fff; border-color: var(--accent);
   box-shadow: 0 2px 8px rgba(31,107,69,.22);
@@ -501,67 +419,48 @@ body.has-nav { padding-top: 56px; }
 .btn-primary:disabled { opacity: .4; cursor: not-allowed; transform: none; }
 
 .btn-secondary {
-  background: var(--surface); color: var(--accent);
-  border: 1.5px solid var(--accent);
+  background: var(--surface); color: var(--accent); border-color: var(--accent);
 }
 .btn-secondary:hover { background: var(--accent-light); }
 
-.btn-dark {
-  background: var(--ink); color: #fff; border-color: var(--ink);
-}
+.btn-dark { background: var(--ink); color: #fff; border-color: var(--ink); }
 .btn-dark:hover { opacity: .85; }
 
-.btn-outline {
-  background: transparent; color: var(--ink); border-color: var(--border-2);
-}
+.btn-outline { background: transparent; color: var(--ink); border-color: var(--border-2); }
 .btn-outline:hover { border-color: var(--ink-2); }
 
-.btn-danger {
-  background: transparent; color: var(--error); border-color: var(--error);
+/* Systeem-keuze knoppen (systeemplafond) */
+.button-group { display: flex; gap: 10px; width: 100%; }
+.button-group .btn {
+  flex: 1; height: 42px;
+  border: 1.5px solid var(--border);
+  background: white; color: var(--ink); font-size: 14px;
 }
-.btn-danger:hover { background: var(--error); color: #fff; }
+.button-group .btn.active {
+  background: var(--ink); color: white; border-color: var(--ink);
+}
+.button-group .btn:hover:not(.active) { border-color: var(--border-2); }
+/* btn-system alias */
+.btn-system { /* inherits .btn + .button-group .btn */ }
+
+/* Calc status */
+.calc-status { font-size: 13px; color: var(--ink-3); transition: color .2s; }
+.calc-status.calculating { color: #C8571B; }
+.calc-status.ready       { color: var(--accent); }
+.calc-status.error       { color: var(--error); }
 
 /* Maten */
 .btn-sm { font-size: .8rem; height: 34px; padding: 0 12px; }
 .btn-lg { font-size: .9rem; height: 44px; padding: 0 22px; }
 .btn-full { width: 100%; }
 
-/* Calc status label naast knop */
-.calc-status { font-size: 13px; color: var(--ink-3); transition: color .2s; }
-.calc-status.calculating { color: var(--warn); }
-.calc-status.ready       { color: var(--accent); }
-.calc-status.error       { color: var(--error); }
-
-/* Knoppengroep (systeemplafond type-keuze) */
-.button-group { display: flex; gap: 10px; width: 100%; }
-.button-group .btn {
-  flex: 1; height: 44px;
-  border-radius: 10px; border: 1.5px solid var(--border);
-  background: white; color: var(--ink); font-size: 15px;
-}
-.button-group .btn.active {
-  background: var(--ink); color: white; border-color: var(--ink);
-}
-.button-group .btn:hover:not(.active) { border-color: var(--border-2); }
-
-/* Toevoegen-knop (tabel) */
-.btn-add-room {
-  flex: 1; height: 42px; padding: 0 16px;
-  border-radius: var(--r-sm); border: 1.5px solid var(--ink);
-  background: white; color: var(--ink);
-  font-size: 14px; font-weight: 500; cursor: pointer;
-  font-family: var(--font); transition: all 200ms ease;
-}
-.btn-add-room:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
-
-/* Delete knop in tabel rij */
+/* Delete knop in tabel */
 .btn-delete,
 .btn-delete-room {
   background: none; border: none; cursor: pointer;
   color: var(--ink-3); font-size: 15px;
   padding: 3px 7px; border-radius: 4px;
   transition: color .15s, background .15s; line-height: 1;
-  font-family: var(--font);
 }
 .btn-delete:hover,
 .btn-delete-room:hover { color: var(--error); background: rgba(217,79,79,.08); }
@@ -574,7 +473,7 @@ body.has-nav { padding-top: 56px; }
 }
 
 /* ==========================================================================
-   RESULTATEN SECTIE — metalstud wand stijl (tabelkaarten)
+   RESULTATEN SECTIE
    ========================================================================== */
 
 .results-section { margin-top: 28px; display: flex; flex-direction: column; gap: 18px; }
@@ -587,6 +486,8 @@ body.has-nav { padding-top: 56px; }
   box-shadow: var(--shadow);
 }
 
+.totalen-card { border-width: 2px; }
+
 .table-header {
   display: flex; align-items: center; justify-content: space-between;
   padding: 16px 20px 14px;
@@ -595,8 +496,7 @@ body.has-nav { padding-top: 56px; }
 
 .table-header h3 {
   font-size: 14px; font-weight: 600; letter-spacing: -.01em;
-  display: flex; align-items: center; gap: 10px;
-  font-family: var(--font); color: var(--ink);
+  display: flex; align-items: center; gap: 10px; color: var(--ink);
 }
 
 .tag {
@@ -607,38 +507,6 @@ body.has-nav { padding-top: 56px; }
 }
 
 .table-count { font-size: 13px; color: var(--ink-3); }
-
-/* ==========================================================================
-   RESULTATEN — systeemplafond stijl (lijstitems)
-   ========================================================================== */
-
-.results-container { display: flex; flex-direction: column; gap: 18px; animation: fadeIn 200ms ease; }
-.results-group { padding: 0; }
-.results-group-title {
-  font-size: 12px; font-weight: 600; color: var(--ink);
-  margin-bottom: 12px; text-transform: uppercase;
-  letter-spacing: .4px; opacity: .7; font-family: var(--font);
-}
-
-.result-item {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 10px 0; border-bottom: 1px solid var(--border);
-}
-.result-item:last-child { border-bottom: none; }
-.result-label { font-size: 14px; color: var(--ink); font-weight: 500; }
-.result-value {
-  font-size: 17px; font-weight: 600;
-  color: var(--accent); min-width: 50px; text-align: right;
-}
-
-.results-divider { height: 1px; background: var(--border); margin: 14px 0; }
-.selected-system { font-size: 13px; color: var(--ink-3); margin-top: 10px; padding: 6px 0; }
-.summary-info {
-  font-size: 13px; color: var(--ink-3); margin-top: 14px;
-  padding: 12px 0; border-top: 1px solid var(--border);
-}
-.summary-info strong { color: var(--ink); font-weight: 600; }
-.info-text { font-size: 12px; color: var(--ink-3); margin-top: 6px; font-style: italic; }
 
 /* ==========================================================================
    TABEL
@@ -654,7 +522,7 @@ thead th {
   font-size: 11px; font-weight: 600;
   color: var(--ink-2); text-transform: uppercase; letter-spacing: .5px;
   background: var(--surface-2); border-bottom: 1px solid var(--border);
-  white-space: nowrap; font-family: var(--font);
+  white-space: nowrap;
 }
 thead th:first-child { text-align: left; }
 
@@ -667,52 +535,47 @@ tbody td:first-child { text-align: left; color: var(--ink); font-weight: 500; }
 tbody tr:last-child td { border-bottom: none; }
 tbody tr:hover td { background: #FAFAF8; }
 
-/* Lege rij */
 .empty-row td {
   text-align: center; color: var(--ink-3);
   padding: 28px 16px; font-size: 13px;
 }
 
-/* Totalen */
 tfoot tr { background: var(--surface-2); border-top: 2px solid var(--border); }
 tfoot td {
   padding: 10px 16px; font-size: 13px; font-weight: 600;
   color: var(--ink-2); white-space: nowrap; text-align: right;
 }
 tfoot td.totaal-label { color: var(--ink); font-weight: 600; text-align: left; }
-tfoot td.totaal-val   { color: var(--ink); font-family: var(--mono); text-align: right; }
+tfoot td.totaal-val   { color: var(--ink); font-family: var(--mono); }
 
-/* Totalen categorieheader */
 tr.totaal-categorie-header td {
-  background: var(--surface-2);
-  color: var(--ink-2); font-size: 11px; font-weight: 700;
+  background: var(--surface-2); color: var(--ink-2);
+  font-size: 11px; font-weight: 700;
   text-transform: uppercase; letter-spacing: .7px;
   padding: 7px 16px; text-align: left !important;
 }
 
-/* Handmatig toegevoegde rijen */
 tr.extra-rij td { color: var(--ink-2); font-style: italic; }
 tr.extra-rij td:first-child { font-style: normal; color: var(--ink); }
 
-/* Num (monospace cellen) */
 .num { font-family: var(--mono); }
 
 /* Select in tabel */
-.ruimtes-table select,
 table select {
-  width: 100%; padding: 6px 10px;
+  padding: 6px 26px 6px 10px;
   border: 1.5px solid var(--border); border-radius: 6px;
   background: white; color: var(--ink);
   font-size: 13px; cursor: pointer;
   font-family: var(--font); transition: border-color .15s;
   appearance: none; -webkit-appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239B9A93' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 8px center; padding-right: 26px;
+  background-repeat: no-repeat; background-position: right 8px center;
+  width: 100%;
 }
 table select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(31,107,69,.1); }
 
 /* ==========================================================================
-   HANDMATIG INVOER SECTIE (metalstud totalen kaart)
+   HANDMATIG INVOER
    ========================================================================== */
 
 .handmatig-invoer {
@@ -724,7 +587,7 @@ table select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0
 
 .handmatig-titel {
   font-size: 11px; font-weight: 600; color: var(--ink-2);
-  text-transform: uppercase; letter-spacing: .6px; margin-bottom: 6px;
+  text-transform: uppercase; letter-spacing: .6px;
 }
 
 .handmatig-rij {
@@ -746,7 +609,6 @@ table select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0
   transition: border-color .15s, box-shadow .15s;
   appearance: none; -webkit-appearance: none;
 }
-
 .handmatig-rij .input-breed { flex: 3; min-width: 140px; }
 .handmatig-rij .handmatig-select {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239B9A93' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
@@ -758,22 +620,6 @@ table select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0
   border-color: var(--accent); box-shadow: 0 0 0 3px rgba(31,107,69,.12);
 }
 
-.invoer-of-scheiding {
-  display: flex; align-items: center; gap: 10px;
-  color: var(--ink-3); font-size: 12px; font-weight: 500;
-  padding-left: 62px;
-}
-.invoer-of-scheiding::before, .invoer-of-scheiding::after {
-  content: ''; flex: 1; height: 1px; background: var(--border);
-}
-
-.handmatig-actie { display: flex; align-items: center; gap: 12px; padding-top: 4px; }
-.handmatig-hint { font-size: 12px; color: var(--ink-3); }
-.handmatig-hint em { font-style: italic; }
-
-.invoer-sectie { margin-bottom: 0; }
-.invoer-scheiding { height: 1px; background: var(--border); margin: 12px 0; }
-
 .handmatig-select {
   height: 38px; padding: 0 28px 0 10px;
   border: 1.5px solid var(--border); border-radius: var(--r-sm);
@@ -782,12 +628,25 @@ table select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239B9A93' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 8px center;
   appearance: none; -webkit-appearance: none;
-  outline: none; cursor: pointer; flex-shrink: 0; transition: border-color .15s;
+  outline: none; cursor: pointer; transition: border-color .15s;
 }
 .handmatig-select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(31,107,69,.12); }
 
+.invoer-of-scheiding {
+  display: flex; align-items: center; gap: 10px;
+  color: var(--ink-3); font-size: 12px; font-weight: 500; padding-left: 62px;
+}
+.invoer-of-scheiding::before,
+.invoer-of-scheiding::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+.handmatig-actie { display: flex; align-items: center; gap: 12px; padding-top: 4px; }
+.handmatig-hint  { font-size: 12px; color: var(--ink-3); }
+.handmatig-hint em { font-style: italic; }
+
+.invoer-scheiding { height: 1px; background: var(--border); margin: 12px 0; }
+
 /* ==========================================================================
-   BADGES / STATUS
+   BADGES
    ========================================================================== */
 
 .badge {
@@ -795,7 +654,7 @@ table select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0
   font-size: .65rem; font-weight: 600;
   letter-spacing: .07em; text-transform: uppercase;
   padding: .22rem .6rem; border-radius: 20px;
-  white-space: nowrap; font-family: var(--font);
+  white-space: nowrap;
 }
 .badge-live    { background: var(--live-bg);   color: var(--live-ink); }
 .badge-soon    { background: var(--soon-bg);   color: var(--soon-ink); }
@@ -804,49 +663,36 @@ table select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0
 .badge-now     { background: var(--now-bg);    color: var(--now-ink); }
 .badge-done    { background: var(--live-bg);   color: var(--live-ink); }
 
-/* Tag variant (metalstud) */
-.tag {
-  font-size: 11px; font-weight: 500; color: var(--ink-3);
-  background: var(--bg); padding: 2px 8px;
-  border-radius: 20px; border: 1px solid var(--border);
-  letter-spacing: .3px; text-transform: uppercase;
+/* ==========================================================================
+   HUB LAYOUT (afbouwr.nl landingspagina)
+   ========================================================================== */
+
+.section-hub {
+  max-width: 1160px; margin: 0 auto;
+  padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem);
+  position: relative; z-index: 1;
 }
 
-/* ==========================================================================
-   ALERTS
-   ========================================================================== */
-
-.alert {
-  padding: .8rem 1rem; border-radius: var(--r-sm);
-  font-size: .875rem; line-height: 1.5; border: 1px solid transparent;
+.divider {
+  max-width: 1160px; margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 4rem);
+  border-top: 1px solid var(--border);
 }
-.alert-error   { background: var(--error-light); color: #7A2D12; border-color: #F5C6B4; }
-.alert-success { background: var(--live-bg);     color: var(--live-ink); border-color: #A8DBC0; }
-.alert-info    { background: var(--now-bg);      color: var(--now-ink); border-color: #B3CFEE; }
-
-/* ==========================================================================
-   LEGE STAAT
-   ========================================================================== */
-
-.empty-state { text-align: center; padding: 36px 0; }
-.empty-state-icon { display: block; font-size: 44px; margin-bottom: 14px; opacity: .35; }
-.empty-state-text { font-size: 13px; color: var(--ink-3); }
-
-/* ==========================================================================
-   HUB SECTIE HEADER
-   ========================================================================== */
 
 .section-head { margin-bottom: 2.25rem; }
+
 .section-eyebrow {
   display: block; font-size: .7rem; font-weight: 600;
   letter-spacing: .12em; text-transform: uppercase;
   color: var(--ink-3); margin-bottom: .55rem;
 }
+
 .section-title-hub {
   font-family: var(--font-display);
   font-size: clamp(1.4rem, 3vw, 2rem);
   font-weight: 400; letter-spacing: -.01em; line-height: 1.2;
 }
+
 .section-desc {
   margin-top: .5rem; font-size: .88rem; color: var(--ink-2);
   line-height: 1.65; font-weight: 300; max-width: 480px;
@@ -856,39 +702,42 @@ table select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0
    FOOTER
    ========================================================================== */
 
-/* Calculator footer: verborgen */
-.footer { display: none; }
+.footer { display: none; } /* calculator footer verborgen */
 
-/* Site footer (hub) */
 .site-footer {
   border-top: 1px solid var(--border);
   padding: 1.75rem clamp(1.25rem, 5vw, 4rem);
   position: relative; z-index: 1;
 }
+
 .site-footer-inner {
   max-width: 1160px; margin: 0 auto;
   display: flex; justify-content: space-between; align-items: center;
   gap: 1.5rem; flex-wrap: wrap;
 }
+
 .footer-logo {
   font-family: var(--font-display); font-size: .95rem; font-weight: 600;
   color: var(--ink); text-decoration: none;
   display: flex; align-items: center; gap: .4rem;
 }
+
 .footer-copy { font-size: .75rem; color: var(--ink-3); margin-top: .2rem; font-weight: 300; }
+
 .footer-links { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
 .footer-links a { font-size: .82rem; color: var(--ink-2); text-decoration: none; transition: color .15s; }
 .footer-links a:hover { color: var(--ink); }
 
 /* ==========================================================================
-   SCHEIDINGSLIJNEN / HULPKLASSEN
+   HULPKLASSEN
    ========================================================================== */
 
-hr, .divider-line { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
-.hidden    { display: none !important; }
-.sr-only   { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+.hidden  { display: none !important; }
+.no-print { }
 .text-muted  { color: var(--ink-3); }
 .text-accent { color: var(--accent); }
+
+hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 
 /* ==========================================================================
    ANIMATIES
@@ -908,42 +757,35 @@ hr, .divider-line { border: none; border-top: 1px solid var(--border); margin: 2
    RESPONSIVE
    ========================================================================== */
 
-/* Tablet */
 @media (max-width: 800px) {
-  .specs-rij           { grid-template-columns: 1fr 1fr; }
-  #gips-select-groep   { grid-template-columns: 1fr 1fr; }
-  .specs-rij-1col      { max-width: 100%; }
+  .specs-rij              { grid-template-columns: 1fr 1fr; }
+  #gips-select-groep      { grid-template-columns: 1fr 1fr; }
+  .specs-rij-1col         { max-width: 100%; }
 }
 
-/* Mobiel */
 @media (max-width: 640px) {
-  .form-grid           { grid-template-columns: 1fr 1fr; }
-  .card                { padding: 16px; }
-  .app-header          { padding: 16px 0 14px; }
-  .header-inner        { flex-direction: column; align-items: flex-start; gap: 12px; }
-  .header-rechts       { align-items: flex-start; }
-  .project-invoer      { align-items: flex-start; }
-  .project-invoer input { width: 100%; }
-  .nav-links           { display: none; }
-  .site-footer-inner   { flex-direction: column; align-items: flex-start; }
+  .form-grid              { grid-template-columns: 1fr 1fr; }
+  .card                   { padding: 16px; }
+  .app-header             { padding: 16px 0 14px; }
+  .header-inner           { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .header-rechts          { align-items: flex-start; width: 100%; }
+  .project-invoer         { align-items: flex-start; width: 100%; }
+  .project-invoer input   { width: 100%; }
+  .nav-links              { display: none; }
+  .site-footer-inner      { flex-direction: column; align-items: flex-start; }
+  .table-header           { flex-direction: column; align-items: flex-start; gap: 6px; }
 }
 
-/* Klein mobiel */
 @media (max-width: 480px) {
-  .specs-rij           { grid-template-columns: 1fr; }
-  #gips-select-groep   { grid-template-columns: 1fr; }
-  .form-grid           { grid-template-columns: 1fr; }
-  .container           { padding: 28px 16px 48px; }
-  .header h1           { font-size: 1.3rem; }
-  .header              { margin-bottom: 28px; }
-  .button-group .btn   { height: 44px; font-size: 14px; }
-  .two-column          { grid-template-columns: 1fr; }
-  .result-value        { font-size: 15px; }
-  .table-actions       { flex-direction: column; }
-  .table-actions .btn,
-  .btn-add-room        { width: 100%; }
-  .handmatig-rij       { flex-direction: column; align-items: stretch; }
-  .handmatig-label     { width: auto; }
+  .form-grid              { grid-template-columns: 1fr; }
+  .specs-rij              { grid-template-columns: 1fr; }
+  #gips-select-groep      { grid-template-columns: 1fr; }
+  .button-group           { flex-direction: column; }
+  .button-group .btn      { width: 100%; }
+  .table-actions          { flex-direction: column; }
+  .table-actions .btn     { width: 100%; }
+  .handmatig-rij          { flex-direction: column; align-items: stretch; }
+  .handmatig-label        { width: auto; }
   .handmatig-rij .handmatig-select { flex: unset; width: 100%; }
 }
 
@@ -952,15 +794,18 @@ hr, .divider-line { border: none; border-top: 1px solid var(--border); margin: 2
    ========================================================================== */
 
 @media print {
-  body::before      { display: none; }
-  body              { background: white; }
-  .nav, .site-footer, .no-print,
-  .table-actions, .card-actions,
-  .btn-add-to-table, .btn-delete,
-  .btn-delete-room, .btn-add-room,
-  .btn-reset, .handmatig-invoer { display: none !important; }
-  .app-wrapper      { max-width: 100%; padding: 0; }
-  .container        { padding: 0; }
-  .card, .table-card { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; margin-bottom: 14px; }
-  .app-header       { border-bottom: 2px solid #000; padding: 10px 0; margin-bottom: 14px; }
+  body, body::before    { background: white; }
+  body::before          { display: none; }
+  .nav, .site-footer,
+  .no-print, .btn-reset,
+  .card-actions,
+  .table-actions,
+  .btn-delete,
+  .btn-delete-room,
+  .handmatig-invoer     { display: none !important; }
+  .app-wrapper          { max-width: 100%; padding: 0; }
+  .card, .table-card    { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; margin-bottom: 14px; }
+  .app-header           { border-bottom: 2px solid #000; padding: 10px 0; margin-bottom: 14px; }
+  .project-invoer input { border: none; font-size: 18px; font-weight: 700; width: auto; padding: 0; pointer-events: none; }
+  .project-invoer label { display: none; }
 }
