@@ -154,34 +154,22 @@
             <label for="plaat-merk">Plafondplaat — merk / type <span style="font-weight:400;color:var(--ink-3);font-size:11px;text-transform:none;letter-spacing:0;">(optioneel)</span></label>
             <select id="plaat-merk">
               <option value="">— niet opgegeven —</option>
+              <optgroup label="Armstrong">
+                <option value="Armstrong Dune">Armstrong Dune</option>
+                <option value="Armstrong Cortega">Armstrong Cortega</option>
+                <option value="Armstrong Bioguard">Armstrong Bioguard</option>
+              </optgroup>
               <optgroup label="Rockfon">
-                <option value="Rockfon Krios">Rockfon Krios</option>
-                <option value="Rockfon Pallas">Rockfon Pallas</option>
-                <option value="Rockfon Lithos">Rockfon Lithos</option>
-                <option value="Rockfon Blanka">Rockfon Blanka</option>
-                <option value="Rockfon Color-all">Rockfon Color-all</option>                
+                <option value="Rockfon Sonar">Rockfon Sonar</option>
+                <option value="Rockfon Color-all">Rockfon Color-all</option>
+                <option value="Rockfon Tropic">Rockfon Tropic</option>
               </optgroup>
               <optgroup label="Knauf">
-                <option value="Knauf Feria">Knauf Feria</option>
-                <option value="Knauf Perla">Knauf Perla</option>
-                <option value="Knauf Tatra">Knauf Tatra</option>
-                <option value="Knauf Sahara">Knauf Sahara</option>
-              </optgroup>
-              <optgroup label="OWA">
-                <option value="OWA Brillianto">OWA Brillianto</option>
-                <option value="OWA Sternbild">OWA Sternbild</option>
-                <option value="OWA Harmony">OWA Harmony</option>
-              </optgroup>
-              <optgroup label="Ecophon">
-                <option value="Ecophon Advantage">Ecophon Advantage</option>
-                <option value="Ecophon Gedina">Ecophon Gedina</option>
-                <option value="Ecophon Focus">Ecophon Focus</option>
-              </optgroup>
-              <optgroup label="Gipsvinyl">
-                <option value="Gipsvinyl">Gipsvinyl</option>
+                <option value="Knauf Cleaneo">Knauf Cleaneo</option>
+                <option value="Knauf Soundwave">Knauf Soundwave</option>
               </optgroup>
               <optgroup label="Overig">
-                <option value="anders">Anders</option>
+                <option value="anders">Anders (zelf invullen)</option>
               </optgroup>
             </select>
             <input
@@ -300,6 +288,25 @@
           </div>
         </div>
 
+        <!-- Handmatig materiaal toevoegen -->
+        <div class="table-card no-print">
+          <div class="table-header">
+            <h3>Handmatig materiaal toevoegen</h3>
+          </div>
+          <div class="handmatig-invoer">
+            <div class="handmatig-rij">
+              <div class="handmatig-label" style="width:80px;">Materiaal</div>
+              <input type="text"   id="extra-omschrijving" placeholder="Omschrijving" class="input-breed" />
+              <input type="number" id="extra-aantal"       placeholder="Aantal" min="0" step="1" />
+              <input type="text"   id="extra-eenheid"      placeholder="Eenheid" />
+            </div>
+            <div class="handmatig-actie">
+              <button class="btn btn-primary" id="btn-handmatig-add">+ Toevoegen</button>
+              <span class="handmatig-hint">Voeg extra materialen toe aan het totaaloverzicht</span>
+            </div>
+          </div>
+        </div>
+
         <!-- Totaaloverzicht materialen -->
         <div class="table-card totalen-card">
           <div class="table-header">
@@ -322,25 +329,6 @@
           </div>
           <div class="table-actions" style="padding: 14px 20px;">
             <button class="btn btn-outline btn-sm" onclick="window.print()">⎙ Afdrukken</button>
-          </div>
-        </div>
-
-        <!-- Handmatig materiaal toevoegen -->
-        <div class="table-card no-print">
-          <div class="table-header">
-            <h3>Handmatig materiaal toevoegen</h3>
-          </div>
-          <div class="handmatig-invoer">
-            <div class="handmatig-rij">
-              <div class="handmatig-label">Materiaal</div>
-              <input type="text"   id="extra-omschrijving" placeholder="Omschrijving" class="input-breed" />
-              <input type="number" id="extra-aantal"       placeholder="Aantal" min="0" step="1" />
-              <input type="text"   id="extra-eenheid"      placeholder="Eenheid" />
-            </div>
-            <div class="handmatig-actie">
-              <button class="btn btn-primary" id="btn-handmatig-add">+ Toevoegen</button>
-              <span class="handmatig-hint">Voeg extra materialen toe aan het totaaloverzicht</span>
-            </div>
           </div>
         </div>
 
