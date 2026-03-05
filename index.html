@@ -5,6 +5,78 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Systeemplafond Rekenmachine</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Compacte knoppen (niet full-width) ── */
+    .btn-group-compact {
+      display: flex;
+      gap: 10px;
+      width: fit-content;
+      margin-top: 4px;
+    }
+    .btn-group-compact .btn {
+      flex: none;
+      height: 38px;
+      padding: 0 20px;
+      border: 1.5px solid var(--border);
+      background: white;
+      color: var(--ink);
+      font-size: 14px;
+      min-width: 130px;
+    }
+    /* Actief = groen (overschrijft de zwarte .button-group .btn.active) */
+    .btn-group-compact .btn.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+    .btn-group-compact .btn:hover:not(.active) {
+      border-color: var(--border-2);
+    }
+
+    /* ── Invoergrid: omschrijving + radio + oppervlakte + omtrek op 1 rij ── */
+    .invoer-rij {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+
+    /* Radio's: gewone rondjes, strak naast elkaar */
+    .radio-rij {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      padding-top: 2px;
+    }
+    .radio-rij label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      color: var(--ink);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .radio-rij input[type="radio"] {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--accent);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* Berekend m² veld — compacter */
+    #berekende-sqm-group { margin-top: 0; }
+
+    @media (max-width: 700px) {
+      .invoer-rij { grid-template-columns: 1fr 1fr; }
+      .btn-group-compact { width: 100%; }
+      .btn-group-compact .btn { flex: 1; min-width: 0; }
+    }
+    @media (max-width: 480px) {
+      .invoer-rij { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body class="has-nav">
 
@@ -50,11 +122,80 @@
           <!-- Systeemtype -->
           <div class="form-group" style="grid-column: 1 / -1;">
             <label>Systeemtype</label>
-            <div class="button-group" style="margin-top: 4px;">
+            <div class="btn-group-compact">
               <button class="btn btn-system" data-system="600x600">600×600 systeem</button>
               <button class="btn btn-system" data-system="600x1200">600×1200 systeem</button>
             </div>
           </div>
+
+          <!-- Kleur profielen -->
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label>Kleur profielen &amp; hoeklijn</label>
+            <div class="btn-group-compact">
+              <button class="btn btn-kleur active" data-kleur="wit">
+                <span style="display:inline-block;width:11px;height:11px;border-radius:2px;background:#fff;border:1.5px solid #CECCBF;vertical-align:middle;margin-right:6px;"></span>Wit
+              </button>
+              <button class="btn btn-kleur" data-kleur="zwart">
+                <span style="display:inline-block;width:11px;height:11px;border-radius:2px;background:#1C2B3A;border:1.5px solid #1C2B3A;vertical-align:middle;margin-right:6px;"></span>Zwart
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ── Scheidingslijn ── -->
+        <div class="sectie-scheiding" style="margin: 20px 0 16px;">
+          <span>Materiaalspecificatie</span>
+        </div>
+
+        <!-- ── Plafondplaat merk/type ── -->
+        <div class="form-grid" style="margin-bottom: 16px;">
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label for="plaat-merk">Plafondplaat — merk / type <span style="font-weight:400;color:var(--ink-3);font-size:11px;text-transform:none;letter-spacing:0;">(optioneel)</span></label>
+            <select id="plaat-merk">
+              <option value="">— niet opgegeven —</option>
+              <optgroup label="Rockfon">
+                <option value="Rockfon Krios">Rockfon Krios</option>
+                <option value="Rockfon Pallas">Rockfon Pallas</option>
+                <option value="Rockfon Lithos">Rockfon Lithos</option>
+                <option value="Rockfon Blanka">Rockfon Blanka</option>
+                <option value="Rockfon Color-all">Rockfon Color-all</option>                
+              </optgroup>
+              <optgroup label="Knauf">
+                <option value="Knauf Feria">Knauf Feria</option>
+                <option value="Knauf Perla">Knauf Perla</option>
+                <option value="Knauf Tatra">Knauf Tatra</option>
+                <option value="Knauf Sahara">Knauf Sahara</option>
+              </optgroup>
+              <optgroup label="OWA">
+                <option value="OWA Brillianto">OWA Brillianto</option>
+                <option value="OWA Sternbild">OWA Sternbild</option>
+                <option value="OWA Harmony">OWA Harmony</option>
+              </optgroup>
+              <optgroup label="Ecophon">
+                <option value="Ecophon Advantage">Ecophon Advantage</option>
+                <option value="Ecophon Gedina">Ecophon Gedina</option>
+                <option value="Ecophon Focus">Ecophon Focus</option>
+              </optgroup>
+              <optgroup label="Gipsvinyl">
+                <option value="Gipsvinyl">Gipsvinyl</option>
+              </optgroup>
+              <optgroup label="Overig">
+                <option value="anders">Anders</option>
+              </optgroup>
+            </select>
+            <input
+              type="text"
+              id="plaat-merk-anders"
+              placeholder="Typ merk / type…"
+              style="display:none; margin-top: 8px;"
+              autocomplete="off"
+            />
+          </div>
+        </div>
+
+        <!-- ── Invoer: 1 rij ── -->
+        <div class="invoer-rij">
 
           <!-- Omschrijving -->
           <div class="form-group">
@@ -62,17 +203,17 @@
             <input type="text" id="ruimte-naam" placeholder="bijv. Kantoor, Gang" value="Ruimte 1" />
           </div>
 
-          <!-- Invoermethode -->
+          <!-- Invoermethode: gewone radio's -->
           <div class="form-group">
             <label>Invoermethode</label>
-            <div class="input-mode-toggle">
-              <label class="radio-label">
+            <div class="radio-rij">
+              <label>
                 <input type="radio" name="input-mode" value="sqm" checked />
-                Vierkante meters
+                m²
               </label>
-              <label class="radio-label">
+              <label>
                 <input type="radio" name="input-mode" value="dimensions" />
-                Lengte × Breedte
+                L × B
               </label>
             </div>
           </div>
@@ -95,9 +236,9 @@
             <input type="number" id="breedte" min="0.1" step="0.1" placeholder="bijv. 4" />
           </div>
 
-          <!-- Berekende m² (verborgen, alleen bij dimensies-modus) -->
+          <!-- Berekende m² (verborgen) -->
           <div class="form-group derived" id="berekende-sqm-group" style="display:none;">
-            <label>Berekende oppervlakte</label>
+            <label>Berekend</label>
             <div class="derived-value" id="berekende-sqm">—</div>
           </div>
 
@@ -109,7 +250,7 @@
 
         </div>
 
-        <div class="card-actions">
+        <div class="card-actions" style="margin-top: 20px;">
           <button class="btn btn-primary" id="btn-toevoegen" disabled>+ Toevoegen aan lijst</button>
           <span class="calc-status" id="calc-status"></span>
         </div>
@@ -130,6 +271,8 @@
                 <tr>
                   <th>Omschrijving</th>
                   <th>Systeem</th>
+                  <th>Plaat</th>
+                  <th>Kleur prof.</th>
                   <th>m²</th>
                   <th>Omtrek (m)</th>
                   <th>Platen</th>
@@ -142,20 +285,14 @@
                 </tr>
               </thead>
               <tbody id="ruimtes-tbody">
-                <tr class="empty-row"><td colspan="11">Nog geen ruimtes toegevoegd</td></tr>
+                <tr class="empty-row"><td colspan="13">Nog geen ruimtes toegevoegd</td></tr>
               </tbody>
               <tfoot>
                 <tr>
-                  <td class="totaal-label">Totaal</td>
-                  <td>—</td>
+                  <td class="totaal-label" colspan="4">Totaal</td>
                   <td class="totaal-val num" id="total-sqm">0</td>
                   <td class="totaal-val num" id="total-omtrek">0</td>
-                  <td class="totaal-val num" id="total-platen">0</td>
-                  <td class="totaal-val num" id="total-hprofiel">0</td>
-                  <td class="totaal-val num" id="total-t1200">0</td>
-                  <td class="totaal-val num" id="total-t600">0</td>
-                  <td class="totaal-val num" id="total-hoeklijn">0</td>
-                  <td class="totaal-val num" id="total-kantlat">0</td>
+                  <td colspan="6" style="text-align:center; color:var(--ink-3); font-size:12px; font-weight:400;">zie totaaloverzicht ↓</td>
                   <td></td>
                 </tr>
               </tfoot>
@@ -166,14 +303,16 @@
         <!-- Totaaloverzicht materialen -->
         <div class="table-card totalen-card">
           <div class="table-header">
-            <h3>Totaaloverzicht <span class="tag">alle materialen</span></h3>
+            <h3>Totaaloverzicht <span class="tag">per product</span></h3>
           </div>
           <div class="table-wrapper">
             <table>
               <thead>
                 <tr>
                   <th>Materiaal</th>
-                  <th>Lengte/maat</th>
+                  <th>Merk / type</th>
+                  <th>Maat</th>
+                  <th>Kleur</th>
                   <th>Aantal</th>
                   <th>Eenheid</th>
                 </tr>
@@ -186,11 +325,30 @@
           </div>
         </div>
 
+        <!-- Handmatig materiaal toevoegen -->
+        <div class="table-card no-print">
+          <div class="table-header">
+            <h3>Handmatig materiaal toevoegen</h3>
+          </div>
+          <div class="handmatig-invoer">
+            <div class="handmatig-rij">
+              <div class="handmatig-label">Materiaal</div>
+              <input type="text"   id="extra-omschrijving" placeholder="Omschrijving" class="input-breed" />
+              <input type="number" id="extra-aantal"       placeholder="Aantal" min="0" step="1" />
+              <input type="text"   id="extra-eenheid"      placeholder="Eenheid" />
+            </div>
+            <div class="handmatig-actie">
+              <button class="btn btn-primary" id="btn-handmatig-add">+ Toevoegen</button>
+              <span class="handmatig-hint">Voeg extra materialen toe aan het totaaloverzicht</span>
+            </div>
+          </div>
+        </div>
+
       </section>
 
     </main>
   </div>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=20260305"></script>
 </body>
 </html>
